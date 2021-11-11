@@ -32,6 +32,7 @@ class AppCubit extends Cubit<AppStates> {
   Database? database;
   List<Map> newTasks = [];
   List<Map> doneTasks = [];
+  List<Map> informationTasks = [];
   List<Map> archivedTasks = [];
 
   void createDatabase() {
@@ -91,10 +92,59 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  Future insertToDatabaseMap({
+    String? permissionNumber,
+    String? kinds,
+  }) async {
+    await database!.transaction((txn)async {
+      await txn
+          .rawInsert(
+        'INSERT INTO tasks(permissionNumber, kinds, status) VALUES("$permissionNumber", "$kinds", "done")',
+      )
+          .then((value) {
+        print('$value inserted successfully');
+        emit(AppInsertDatabaseState());
+
+        getDataFromDatabase(database);
+      }).catchError((error) {
+        print('Error When Inserting New Record ${error.toString()}');
+      });
+
+      //  return null;
+    });
+  }
+
+
+  Future insertToDatabaseInfromation({
+    String? permissionNumber,
+    String? kinds,
+    String? gunNumber,
+    String? productAndName,
+    String? standardCartridge,
+  }) async {
+    await database!.transaction((txn)async {
+      await txn
+          .rawInsert(
+        'INSERT INTO tasks(permissionNumber, kinds, gunNumber, productAndName, standardCartridge, status) VALUES("$permissionNumber", "$kinds", "$gunNumber", "$productAndName", "$standardCartridge", "information")',
+      )
+          .then((value) {
+        print('$value inserted successfully');
+        emit(AppInsertDatabaseState());
+
+        getDataFromDatabase(database);
+      }).catchError((error) {
+        print('Error When Inserting New Record ${error.toString()}');
+      });
+
+      //  return null;
+    });
+  }
+
   void getDataFromDatabase(database)
   {
     newTasks = [];
     doneTasks = [];
+    informationTasks = [];
     archivedTasks = [];
 
     emit(AppGetDatabaseLoadingState());
@@ -107,6 +157,8 @@ class AppCubit extends Cubit<AppStates> {
           newTasks.add(element);
         else if(element['status'] == 'done')
           doneTasks.add(element);
+        else if(element['status'] == 'information')
+          informationTasks.add(element);
         else archivedTasks.add(element);
       });
 
@@ -115,13 +167,17 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void updateData({
-    required String status,
+    String? permissionNumber,
+    String? kinds,
+    String? gunNumber,
+    String? productAndName,
+    String? standardCartridge,
     required int id,
   }) async
   {
     database!.rawUpdate(
-      'UPDATE tasks SET status = ? WHERE id = ?',
-      ['$status', id],
+      'UPDATE tasks SET permissionNumber = ?, kinds = ?, gunNumber = ?, productAndName = ?, standardCartridge = ? WHERE id = ?',
+      ['$permissionNumber', '$kinds', '$gunNumber', '$productAndName', '$standardCartridge', id],
     ).then((value)
     {
       getDataFromDatabase(database);
@@ -129,6 +185,42 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  void updateDataMap({
+    String? permissionNumber,
+    String? kinds,
+
+    required int id,
+  }) async
+  {
+    database!.rawUpdate(
+      'UPDATE tasks SET permissionNumber = ?, kinds = ? WHERE id = ?',
+      ['$permissionNumber', '$kinds', id],
+    ).then((value)
+    {
+      getDataFromDatabase(database);
+      emit(AppUpdateDatabaseState());
+    });
+  }
+
+  void updateDataInformation({
+    String? permissionNumber,
+    String? kinds,
+    String? gunNumber,
+    String? productAndName,
+    String? standardCartridge,
+    required int id,
+  }) async
+  {
+    database!.rawUpdate(
+      'UPDATE tasks SET permissionNumber = ?, kinds = ?, gunNumber = ?, productAndName = ?, standardCartridge = ? WHERE id = ?',
+      ['$permissionNumber', '$kinds', '$gunNumber', '$productAndName', '$standardCartridge', id],
+    ).then((value)
+    {
+      getDataFromDatabase(database);
+      emit(AppUpdateDatabaseState());
+    });
+  }
+/*
   void deleteData({
     required int id,
   }) async
@@ -141,7 +233,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-/*  bool isBottomSheetShown = false;
+  bool isBottomSheetShown = false;
   IconData fabIcon = Icons.edit;
 
   void changeBottomSheetState({

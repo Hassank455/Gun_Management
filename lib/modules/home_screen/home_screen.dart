@@ -126,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Information()));
+                              MaterialPageRoute(builder: (_) => ContractManagementAccountBook()));
                         },
                         child: Container(
                           width: 140,
@@ -155,7 +155,7 @@ class HomeScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (_) =>
-                                      ContractManagementAccountBook()));
+                                      Information()));
                         },
                         child: Container(
                           width: 140,
