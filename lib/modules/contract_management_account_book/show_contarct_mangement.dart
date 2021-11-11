@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ShowContractManagement extends StatelessWidget {
@@ -78,6 +79,12 @@ class ShowContractManagement extends StatelessWidget {
               ),
             ),
             widget1(),
+            SizedBox(height: 20),
+            widget3(),
+            SizedBox(height: 20),
+            widget3(),
+            SizedBox(height: 20),
+            widget4(),
           ],
         ),
       ),
@@ -96,6 +103,7 @@ class ShowContractManagement extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(height: 10),
             Text('銃'),
             Padding(
               padding: const EdgeInsets.only(right: 15, left: 15),
@@ -159,4 +167,398 @@ class ShowContractManagement extends StatelessWidget {
     );
   }
 
+  Widget widget3() {
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Container(
+        height: 300,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.grey),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 10),
+            Text('受先一覧'),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Divider(
+                color: Colors.grey[400],
+                thickness: 2,
+                height: 40,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text('名称'),
+                  SizedBox(width: 10),
+                  Text('所在地'),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Divider(
+                color: Colors.grey[400],
+                thickness: 2,
+                height: 40,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 25, left: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('○○銃砲店'),
+                      SizedBox(height: 15),
+                      Text('東京都中央区'),
+                      SizedBox(height: 15),
+                      Text('○○銃砲店'),
+                    ],
+                  ),
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('東京都中央区'),
+                      SizedBox(height: 15),
+                      Text('千葉県成田市酒井'),
+                      SizedBox(height: 15),
+                      Text('東京都中央区'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Divider(
+                color: Colors.grey[400],
+                thickness: 2,
+                height: 40,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget widget4() {
+    return Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Container(
+        height: 920,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: Colors.grey),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: 10),
+            Text('受払一覧'),
+            SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.only(right: 25, left: 25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('許可'),
+                  Text('無許可'),
+                  Text('有害駆除'),
+                ],
+              ),
+            ),
+            SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Table(
+                border: TableBorder.all(color: Colors.grey),
+                columnWidths: {
+                  1: FlexColumnWidth(.25),
+                  2: FlexColumnWidth(.25),
+                  3: FlexColumnWidth(.25)
+                },
+                children: [
+                  TableRow(children: [
+                    Container(
+                      height: 50,
+                      width: 150,
+                      child: Center(
+                        child: Text('適用'),
+                      ),
+                    ),
+                    Container(
+                      height: 50,
+                      width: 50,
+                      child: Center(
+                        child: Text('受'),
+                      ),
+                    ),
+                    Container(
+                      height: 50,
+                      width: 50,
+                      child: Center(
+                        child: Text('払'),
+                      ),
+                    ),
+                    Container(
+                      height: 50,
+                      width: 50,
+                      child: Center(
+                        child: Text('残'),
+                      ),
+                    ),
+                  ])
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Table(
+                border: TableBorder.all(color: Colors.grey),
+                columnWidths: {
+                  1: FlexColumnWidth(.25),
+                  2: FlexColumnWidth(.25),
+                  3: FlexColumnWidth(.25)
+                },
+                children: [
+                  TableRow(children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('令和3年10月２９日'),
+                            SizedBox(height: 10),
+                            Text('許可'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: Center(child: Text('100')),
+                    ),
+                    Container(),
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('125'),
+                            SizedBox(height: 10),
+                            Text('500'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ])
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Table(
+                border: TableBorder.all(color: Colors.grey),
+                columnWidths: {
+                  1: FlexColumnWidth(.25),
+                  2: FlexColumnWidth(.25),
+                  3: FlexColumnWidth(.25)
+                },
+                children: [
+                  TableRow(children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('令和3年10月２９日'),
+                            SizedBox(height: 10),
+                            Text('許可'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                    Container(),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                  ])
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Table(
+                border: TableBorder.all(color: Colors.grey),
+                columnWidths: {
+                  1: FlexColumnWidth(.25),
+                  2: FlexColumnWidth(.25),
+                  3: FlexColumnWidth(.25)
+                },
+                children: [
+                  TableRow(children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('令和3年10月２９日'),
+                            SizedBox(height: 10),
+                            Text('許可'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                    Container(),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                  ])
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Table(
+                border: TableBorder.all(color: Colors.grey),
+                columnWidths: {
+                  1: FlexColumnWidth(.25),
+                  2: FlexColumnWidth(.25),
+                  3: FlexColumnWidth(.25)
+                },
+                children: [
+                  TableRow(children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('令和3年10月２９日'),
+                            SizedBox(height: 10),
+                            Text('許可'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                    Container(),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                  ])
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15, left: 15),
+              child: Table(
+                border: TableBorder.all(color: Colors.grey),
+                columnWidths: {
+                  1: FlexColumnWidth(.25),
+                  2: FlexColumnWidth(.25),
+                  3: FlexColumnWidth(.25)
+                },
+                children: [
+                  TableRow(children: [
+                    Container(
+                      height: 150,
+                      width: 150,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('令和3年10月２９日'),
+                            SizedBox(height: 10),
+                            Text('許可'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                            SizedBox(height: 10),
+                            Text('○○銃砲店'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                    Container(),
+                    Container(
+                      height: 150,
+                      width: 150,
+
+                    ),
+                  ])
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

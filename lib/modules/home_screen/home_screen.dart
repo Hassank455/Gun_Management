@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gun_management/modules/cartridge_receipt_and_payment/cartridge_receipt_and_payment.dart';
 import 'package:gun_management/modules/contract_management_account_book/contract_management_account_book.dart';
 import 'package:gun_management/modules/gun_list/gun_list.dart';
 import 'package:gun_management/modules/information/informatio.dart';
@@ -33,7 +34,12 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => CartridgeReceiptAndPayment()));
+                  },
                   child: Container(
                     width: double.infinity,
                     height: 123,
@@ -125,8 +131,11 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => ContractManagementAccountBook()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      ContractManagementAccountBook()));
                         },
                         child: Container(
                           width: 140,
@@ -151,11 +160,8 @@ class HomeScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) =>
-                                      Information()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => Information()));
                         },
                         child: Container(
                           width: 140,
