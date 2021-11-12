@@ -4,8 +4,8 @@ import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
 
 class AddDataStorage extends StatelessWidget {
-  var permissionNumber = TextEditingController();
-  var kinds = TextEditingController();
+  var storageName = TextEditingController();
+  var address = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -94,7 +94,7 @@ class AddDataStorage extends StatelessWidget {
                                   Container(
                                     width: 200,
                                     child: TextFormField(
-                                      controller: permissionNumber,
+                                      controller: storageName,
                                       keyboardType: TextInputType.text,
                                       validator: (String? value) {
                                         if (value!.isEmpty) {
@@ -116,7 +116,7 @@ class AddDataStorage extends StatelessWidget {
                                   Container(
                                     width: 200,
                                     child: TextFormField(
-                                      controller: kinds,
+                                      controller: address,
                                       keyboardType: TextInputType.text,
                                       validator: (String? value) {
                                         if (value!.isEmpty) {
@@ -139,8 +139,8 @@ class AddDataStorage extends StatelessWidget {
                     onTap: () {
                       if (formKey.currentState!.validate()) {
                         AppCubit.get(context).insertToDatabaseMap(
-                            permissionNumber: permissionNumber.text,
-                            kinds: kinds.text);
+                            storageName: storageName.text,
+                            address: address.text);
                       }
                     },
                     child: Image.asset('assets/images/image_true.png')),

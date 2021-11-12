@@ -49,7 +49,7 @@ class AppCubit extends Cubit<AppStates> {
         print('database created');
         database
             .execute(
-            'CREATE TABLE tasks (id INTEGER PRIMARY KEY, permissionNumber TEXT, kinds TEXT, gunNumber TEXT, productAndName TEXT, standardCartridge TEXT, status TEXT)')
+            'CREATE TABLE tasks (id INTEGER PRIMARY KEY, permissionNumber TEXT, kinds TEXT, gunNumber TEXT, productAndName TEXT, standardCartridge TEXT, storageName TEXT, address TEXT, user TEXT, fullName TEXT, title TEXT, telephoneNumber TEXT, addressUser TEXT, status TEXT)')
             .then((value) {
           print('table created');
         }).catchError((error) {
@@ -93,13 +93,13 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   Future insertToDatabaseMap({
-    String? permissionNumber,
-    String? kinds,
+    String? storageName,
+    String? address,
   }) async {
     await database!.transaction((txn)async {
       await txn
           .rawInsert(
-        'INSERT INTO tasks(permissionNumber, kinds, status) VALUES("$permissionNumber", "$kinds", "done")',
+        'INSERT INTO tasks(permissionNumber, kinds, status) VALUES("$storageName", "$address", "new")',
       )
           .then((value) {
         print('$value inserted successfully');
@@ -116,16 +116,16 @@ class AppCubit extends Cubit<AppStates> {
 
 
   Future insertToDatabaseInfromation({
-    String? permissionNumber,
-    String? kinds,
-    String? gunNumber,
-    String? productAndName,
-    String? standardCartridge,
+    String? user,
+    String? fullName,
+    String? title,
+    String? telephoneNumber,
+    String? addressUser,
   }) async {
     await database!.transaction((txn)async {
       await txn
           .rawInsert(
-        'INSERT INTO tasks(permissionNumber, kinds, gunNumber, productAndName, standardCartridge, status) VALUES("$permissionNumber", "$kinds", "$gunNumber", "$productAndName", "$standardCartridge", "information")',
+        'INSERT INTO tasks(user, fullName, title, telephoneNumber, addressUser, status) VALUES("$user", "$fullName", "$title", "$telephoneNumber", "$addressUser", "new")',
       )
           .then((value) {
         print('$value inserted successfully');
@@ -186,15 +186,15 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void updateDataMap({
-    String? permissionNumber,
-    String? kinds,
+    String? storageName,
+    String? address,
 
     required int id,
   }) async
   {
     database!.rawUpdate(
-      'UPDATE tasks SET permissionNumber = ?, kinds = ? WHERE id = ?',
-      ['$permissionNumber', '$kinds', id],
+      'UPDATE tasks SET storageName = ?, address = ? WHERE id = ?',
+      ['$storageName', '$address', id],
     ).then((value)
     {
       getDataFromDatabase(database);
@@ -203,17 +203,17 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   void updateDataInformation({
-    String? permissionNumber,
-    String? kinds,
-    String? gunNumber,
-    String? productAndName,
-    String? standardCartridge,
+    String? user,
+    String? fullName,
+    String? title,
+    String? telephoneNumber,
+    String? addressUser,
     required int id,
   }) async
   {
     database!.rawUpdate(
-      'UPDATE tasks SET permissionNumber = ?, kinds = ?, gunNumber = ?, productAndName = ?, standardCartridge = ? WHERE id = ?',
-      ['$permissionNumber', '$kinds', '$gunNumber', '$productAndName', '$standardCartridge', id],
+      'UPDATE tasks SET user = ?, fullName = ?, title = ?, telephoneNumber = ?, addressUser = ? WHERE id = ?',
+      ['$user', '$fullName', '$title', '$telephoneNumber', '$addressUser', id],
     ).then((value)
     {
       getDataFromDatabase(database);

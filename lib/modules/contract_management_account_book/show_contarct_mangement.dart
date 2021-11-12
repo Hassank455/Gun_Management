@@ -1,94 +1,143 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gun_management/shared/cubit/cubit.dart';
+import 'package:gun_management/shared/cubit/states.dart';
 
 class ShowContractManagement extends StatelessWidget {
+  int? id;
+  String? permissionNumber;
+  String? gunNumber;
+  String? productAndName;
+  String? kinds;
+  String? standardCartridge;
+  String? storageName;
+  String? address;
+  String? user;
+  String? fullName;
+  String? title;
+  String? telephoneNumber;
+  String? addressUser;
+
+
+  ShowContractManagement({
+    this.permissionNumber,
+    this.gunNumber,
+    this.productAndName,
+    this.id,
+    this.kinds,
+    this.standardCartridge,
+    this.storageName,
+    this.address,
+    this.user,
+    this.title,
+    this.addressUser,
+    this.fullName,
+    this.telephoneNumber,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Text('実包管理帳簿', style: TextStyle(color: Colors.black)),
-        leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black)),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 40),
-              child: Row(
+    print(id);
+    print(permissionNumber);
+    print(storageName);
+    print(title);
+    print('#############');
+
+    return BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          /*var tasks = AppCubit.get(context).newTasks;
+          var tasks2 = AppCubit.get(context).doneTasks;*/
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              centerTitle: true,
+              title: Text('実包管理帳簿', style: TextStyle(color: Colors.black)),
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back_ios, color: Colors.black)),
+            ),
+            body: SingleChildScrollView(
+              child: Column(
                 children: [
-                  Text('期間：'),
-                  SizedBox(width: 5),
-                  Text('平成30年10月1日～令和３年10月26日'),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 30, right: 30, top: 40),
+                    child: Row(
+                      children: [
+                        Text('期間：'),
+                        SizedBox(width: 5),
+                        Text('平成30年10月1日～令和３年10月26日'),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    child: Divider(
+                      color: Colors.grey[400],
+                      thickness: 2,
+                      height: 50,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 30,
+                      right: 30,
+                    ),
+                    child: Row(
+                      children: [
+                        Text('住所：'),
+                        SizedBox(width: 5),
+                        Text('○○○○'),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 30, right: 30, top: 15),
+                    child: Row(
+                      children: [
+                        Text('氏名：'),
+                        SizedBox(width: 5),
+                        Text('○○○ ○○○○'),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 30, right: 30, top: 15),
+                    child: Row(
+                      children: [
+                        Text('電話番号：'),
+                        SizedBox(width: 5),
+                        Text('○○○ ○○○○'),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 30),
+                    child: Divider(
+                      color: Colors.grey[400],
+                      thickness: 2,
+                      height: 50,
+                    ),
+                  ),
+                  widget1(),
+                  SizedBox(height: 20),
+                  widget3(),
+                  SizedBox(height: 20),
+                  widget3(),
+                  SizedBox(height: 20),
+                  widget4(),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: Divider(
-                color: Colors.grey[400],
-                thickness: 2,
-                height: 50,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 30,
-                right: 30,
-              ),
-              child: Row(
-                children: [
-                  Text('住所：'),
-                  SizedBox(width: 5),
-                  Text('○○○○'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
-              child: Row(
-                children: [
-                  Text('氏名：'),
-                  SizedBox(width: 5),
-                  Text('○○○ ○○○○'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30, top: 15),
-              child: Row(
-                children: [
-                  Text('電話番号：'),
-                  SizedBox(width: 5),
-                  Text('○○○ ○○○○'),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: Divider(
-                color: Colors.grey[400],
-                thickness: 2,
-                height: 50,
-              ),
-            ),
-            widget1(),
-            SizedBox(height: 20),
-            widget3(),
-            SizedBox(height: 20),
-            widget3(),
-            SizedBox(height: 20),
-            widget4(),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 
   Widget widget1() {
@@ -409,13 +458,11 @@ class ShowContractManagement extends StatelessWidget {
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                     Container(),
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                   ])
                 ],
@@ -454,13 +501,11 @@ class ShowContractManagement extends StatelessWidget {
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                     Container(),
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                   ])
                 ],
@@ -499,13 +544,11 @@ class ShowContractManagement extends StatelessWidget {
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                     Container(),
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                   ])
                 ],
@@ -544,13 +587,11 @@ class ShowContractManagement extends StatelessWidget {
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                     Container(),
                     Container(
                       height: 150,
                       width: 150,
-
                     ),
                   ])
                 ],

@@ -184,11 +184,11 @@ class AddDataInformation extends StatelessWidget {
                   onTap: () {
                     if (formKey.currentState!.validate()) {
                       AppCubit.get(context).insertToDatabaseInfromation(
-                        permissionNumber: permissionNumber.text,
-                        kinds: kinds.text,
-                        gunNumber: gunNumber.text,
-                        productAndName: productAndName.text,
-                        standardCartridge: standardCartridge.text,
+                        user: permissionNumber.text,
+                        fullName: kinds.text,
+                        title: gunNumber.text,
+                        telephoneNumber: productAndName.text,
+                        addressUser: standardCartridge.text,
                       );
                     }
                   },

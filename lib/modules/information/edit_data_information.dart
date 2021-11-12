@@ -35,11 +35,11 @@ class _EditDataInformationState extends State<EditDataInformation> {
 
   @override
   void initState() {
-    editPermissionNumber.text = widget.permissionNumber!;
-    editKinds.text = widget.kinds!;
-    editGunNumber.text = widget.gunNumber!;
-    editProductAndName.text = widget.productAndName!;
-    editStandardCartridge.text = widget.standardCartridge!;
+    editPermissionNumber.text = widget.permissionNumber ?? 'null';
+    editKinds.text = widget.kinds ?? 'null';
+    editGunNumber.text = widget.gunNumber ?? 'null';
+    editProductAndName.text = widget.productAndName ?? 'null';
+    editStandardCartridge.text = widget.standardCartridge ?? 'null';
     super.initState();
   }
 
@@ -212,11 +212,11 @@ class _EditDataInformationState extends State<EditDataInformation> {
                       if (formKey.currentState!.validate()) {
                         AppCubit.get(context).updateDataInformation(
                           id: widget.id!,
-                          permissionNumber: editPermissionNumber.text,
-                          gunNumber: editGunNumber.text,
-                          kinds: editKinds.text,
-                          productAndName: editProductAndName.text,
-                          standardCartridge: editStandardCartridge.text,
+                          user: editPermissionNumber.text,
+                          fullName: editGunNumber.text,
+                          title: editKinds.text,
+                          telephoneNumber: editProductAndName.text,
+                          addressUser: editStandardCartridge.text,
                         );
                       }
                     },

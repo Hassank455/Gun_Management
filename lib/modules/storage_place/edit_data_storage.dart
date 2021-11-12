@@ -15,23 +15,23 @@ class EditDataStorage extends StatefulWidget {
 }
 
 class _EditDataStorageState extends State<EditDataStorage> {
-  var editPermissionNumber = TextEditingController();
-  var editKinds = TextEditingController();
+  var editStorageName = TextEditingController();
+  var editAddress = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    editPermissionNumber.text = widget.permissionNumber!;
-    editKinds.text = widget.kinds!;
+    editStorageName.text = widget.permissionNumber ?? 'null';
+    editAddress.text = widget.kinds ?? 'null';
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    editPermissionNumber.dispose();
-    editKinds.dispose();
+    editStorageName.dispose();
+    editAddress.dispose();
   }
 
   @override
@@ -87,9 +87,53 @@ class _EditDataStorageState extends State<EditDataStorage> {
                           key: formKey,
                           child: Column(
                             children: [
-                              TextFormField(
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('許可番号'),
+                                  Container(
+                                    width: 200,
+                                    child: TextFormField(
+                                      controller: editStorageName,
+                                      keyboardType: TextInputType.text,
+                                      validator: (String? value) {
+                                        if (value!.isEmpty) {
+                                          return '許可番号 空であってはなりません ';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('種類'),
+                                  Container(
+                                    width: 200,
+                                    child: TextFormField(
+                                      controller: editAddress,
+                                      keyboardType: TextInputType.text,
+                                      validator: (String? value) {
+                                        if (value!.isEmpty) {
+                                          return '種類 空であってはなりません ';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10),
+                            /*  TextFormField(
                                 autofocus: true,
-                                controller: editPermissionNumber,
+                                controller: editStorageName,
                                 keyboardType: TextInputType.text,
                                 validator: (String? value) {
                                   if (value!.isEmpty) {
@@ -105,7 +149,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
                               SizedBox(height: 15),
                               TextFormField(
                                 autofocus: true,
-                                controller: editKinds,
+                                controller: editAddress,
                                 keyboardType: TextInputType.text,
                                 validator: (String? value) {
                                   if (value!.isEmpty) {
@@ -117,7 +161,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
                                   hintText: '種類',
                                 ),
                               ),
-                              SizedBox(height: 15),
+                              SizedBox(height: 15),*/
                             ],
                           )),
                     ],
@@ -129,8 +173,8 @@ class _EditDataStorageState extends State<EditDataStorage> {
                       if (formKey.currentState!.validate()) {
                         AppCubit.get(context).updateDataMap(
                           id: widget.id!,
-                          permissionNumber: editPermissionNumber.text,
-                          kinds: editKinds.text,
+                          storageName: editStorageName.text,
+                          address: editAddress.text,
                         );
                       }
                     },

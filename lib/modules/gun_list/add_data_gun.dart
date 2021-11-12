@@ -72,7 +72,7 @@ class AddDataGun extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Expanded(flex: 1, child: Text('許可番号')),
+                                    Expanded(flex: 1, child: Text('許可番号       第')),
                                     Expanded(
                                       flex: 2,
                                       child: TextFormField(
@@ -85,7 +85,7 @@ class AddDataGun extends StatelessWidget {
                                           return null;
                                         },
                                       ),
-                                    ),
+                                    ),Expanded(flex: 0, child: Text('号')),
                                   ],
                                 ),
                                 SizedBox(height: 15),

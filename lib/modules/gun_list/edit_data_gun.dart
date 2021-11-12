@@ -34,11 +34,11 @@ class _EditDataGunState extends State<EditDataGun> {
 
   @override
   void initState() {
-    editPermissionNumber.text = widget.permissionNumber!;
-    editKinds.text = widget.kinds!;
-    editGunNumber.text = widget.gunNumber!;
-    editProductAndName.text = widget.productAndName!;
-    editStandardCartridge.text = widget.standardCartridge!;
+    editPermissionNumber.text = widget.permissionNumber ?? 'null';
+    editKinds.text = widget.kinds ?? 'null';
+    editGunNumber.text = widget.gunNumber ?? 'null';
+    editProductAndName.text = widget.productAndName ?? 'null';
+    editStandardCartridge.text = widget.standardCartridge ?? 'null';
     super.initState();
   }
 
