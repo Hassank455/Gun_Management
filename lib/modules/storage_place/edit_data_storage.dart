@@ -100,7 +100,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
                                       keyboardType: TextInputType.text,
                                       validator: (String? value) {
                                         if (value!.isEmpty) {
-                                          return '許可番号 空であってはなりません ';
+                                          return '保管庫名称 空であってはなりません ';
                                         }
                                         return null;
                                       },
@@ -122,7 +122,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
                                       keyboardType: TextInputType.text,
                                       validator: (String? value) {
                                         if (value!.isEmpty) {
-                                          return '種類 空であってはなりません ';
+                                          return '住所 空であってはなりません ';
                                         }
                                         return null;
                                       },

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:gun_management/modules/cartridge_receipt_and_payment/payment_editing.dart';
+import 'package:gun_management/shared/cubit/cubit.dart';
 
 class CartridgeReceiptAndPayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var tasks = AppCubit.get(context).newTasks;
+    var tasks2 = AppCubit.get(context).informationTasks;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -59,6 +62,8 @@ class CartridgeReceiptAndPayment extends StatelessWidget {
           ),
         ),
       ),
+
+
     );
   }
 

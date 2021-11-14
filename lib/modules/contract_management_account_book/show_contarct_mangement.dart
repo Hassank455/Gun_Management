@@ -11,8 +11,10 @@ class ShowContractManagement extends StatelessWidget {
   String? productAndName;
   String? kinds;
   String? standardCartridge;
+
   String? storageName;
   String? address;
+
   String? user;
   String? fullName;
   String? title;
@@ -54,7 +56,7 @@ class ShowContractManagement extends StatelessWidget {
               backgroundColor: Colors.transparent,
               elevation: 0,
               centerTitle: true,
-              title: Text('実包管理帳簿', style: TextStyle(color: Colors.black)),
+              title: Text(permissionNumber ?? '', style: TextStyle(color: Colors.black)),
               leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -92,7 +94,7 @@ class ShowContractManagement extends StatelessWidget {
                       children: [
                         Text('住所：'),
                         SizedBox(width: 5),
-                        Text('○○○○'),
+                        Text(addressUser ?? ''),
                       ],
                     ),
                   ),
@@ -103,7 +105,7 @@ class ShowContractManagement extends StatelessWidget {
                       children: [
                         Text('氏名：'),
                         SizedBox(width: 5),
-                        Text('○○○ ○○○○'),
+                        Text(fullName ?? ''),
                       ],
                     ),
                   ),
@@ -114,7 +116,7 @@ class ShowContractManagement extends StatelessWidget {
                       children: [
                         Text('電話番号：'),
                         SizedBox(width: 5),
-                        Text('○○○ ○○○○'),
+                        Text(telephoneNumber ?? ''),
                       ],
                     ),
                   ),
@@ -179,7 +181,7 @@ class ShowContractManagement extends StatelessWidget {
           child: Row(
             children: [
               Text('許可番号：'),
-              Text('○○○○'),
+              Text(permissionNumber ?? ''),
             ],
           ),
         ),
@@ -189,7 +191,7 @@ class ShowContractManagement extends StatelessWidget {
           child: Row(
             children: [
               Text('銃番号：'),
-              Text('○○○○'),
+              Text(gunNumber ?? ''),
             ],
           ),
         ),
@@ -199,7 +201,7 @@ class ShowContractManagement extends StatelessWidget {
           child: Row(
             children: [
               Text('商品名等：'),
-              Text('○○○○'),
+              Text(productAndName ?? ''),
             ],
           ),
         ),
@@ -243,9 +245,9 @@ class ShowContractManagement extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('名称'),
+                  Text(fullName ?? ''),
                   SizedBox(width: 10),
-                  Text('所在地'),
+                  Text(addressUser ?? ''),
                 ],
               ),
             ),
@@ -265,22 +267,22 @@ class ShowContractManagement extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('○○銃砲店'),
+                      Text(storageName ?? ''),
                       SizedBox(height: 15),
-                      Text('東京都中央区'),
+                      Text(storageName ?? ''),
                       SizedBox(height: 15),
-                      Text('○○銃砲店'),
+                      Text(storageName ?? ''),
                     ],
                   ),
                   SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('東京都中央区'),
+                      Text(address ?? ''),
                       SizedBox(height: 15),
-                      Text('千葉県成田市酒井'),
+                      Text(address ?? ''),
                       SizedBox(height: 15),
-                      Text('東京都中央区'),
+                      Text(address ?? ''),
                     ],
                   ),
                 ],

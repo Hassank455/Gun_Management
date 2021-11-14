@@ -99,7 +99,7 @@ class AppCubit extends Cubit<AppStates> {
     await database!.transaction((txn)async {
       await txn
           .rawInsert(
-        'INSERT INTO tasks(permissionNumber, kinds, status) VALUES("$storageName", "$address", "new")',
+        'INSERT INTO tasks(storageName, address, status) VALUES("$storageName", "$address", "new")',
       )
           .then((value) {
         print('$value inserted successfully');
