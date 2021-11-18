@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          fontFamily: 'NotoSerifJP',
           primarySwatch: Colors.blue,
         ),
         home: HomeScreen(),

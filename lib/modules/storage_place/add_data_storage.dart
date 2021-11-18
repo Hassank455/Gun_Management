@@ -32,7 +32,7 @@ class AddDataStorage extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(),
-            borderRadius: BorderRadius.circular(45),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(45),topLeft: Radius.circular(45)),
           ),
           height: 580,
           child: SingleChildScrollView(
@@ -88,7 +88,7 @@ class AddDataStorage extends StatelessWidget {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text('許可番号'),
                                   Container(
@@ -110,7 +110,7 @@ class AddDataStorage extends StatelessWidget {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text('種類'),
                                   Container(
@@ -141,6 +141,7 @@ class AddDataStorage extends StatelessWidget {
                         AppCubit.get(context).insertToDatabaseMap(
                             storageName: storageName.text,
                             address: address.text);
+
                       }
                     },
                     child: Image.asset('assets/images/image_true.png')),

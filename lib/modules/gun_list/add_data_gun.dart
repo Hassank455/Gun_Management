@@ -40,7 +40,7 @@ class AddDataGun extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(),
-              borderRadius: BorderRadius.circular(45),
+              borderRadius: BorderRadius.only(topRight: Radius.circular(45),topLeft: Radius.circular(45)),
             ),
 
             child: SingleChildScrollView(
@@ -70,29 +70,37 @@ class AddDataGun extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Expanded(flex: 1, child: Text('許可番号       第')),
+                                    Expanded(flex: 0, child: Text('許可番号         第')),
+                                    SizedBox(width: 10),
                                     Expanded(
-                                      flex: 2,
-                                      child: TextFormField(
-                                        controller: permissionNumber,
-                                        keyboardType: TextInputType.text,
-                                        validator: (String? value) {
-                                          if (value!.isEmpty) {
-                                            return '許可番号 空であってはなりません ';
-                                          }
-                                          return null;
-                                        },
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                            flex: 2,
+                                            child: TextFormField(
+                                              controller: permissionNumber,
+                                              keyboardType: TextInputType.text,
+                                              validator: (String? value) {
+                                                if (value!.isEmpty) {
+                                                  return '許可番号 空であってはなりません ';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ),Expanded(flex: 0, child: Text('号')),
+                                        ],
                                       ),
-                                    ),Expanded(flex: 0, child: Text('号')),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: 15),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(flex: 1, child: Text('種類')),
                                     Expanded(
@@ -114,7 +122,7 @@ class AddDataGun extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(flex: 1, child: Text('銃番号')),
                                     Expanded(
@@ -136,7 +144,7 @@ class AddDataGun extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(flex: 1, child: Text('商品名等')),
                                     Expanded(
@@ -158,7 +166,7 @@ class AddDataGun extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(flex: 1, child: Text('定号実包')),
                                     Expanded(

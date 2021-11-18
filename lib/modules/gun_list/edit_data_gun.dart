@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
 
+import 'gun_list.dart';
+
 class EditDataGun extends StatefulWidget {
   String? permissionNumber;
   String? kinds;
@@ -60,7 +62,10 @@ class _EditDataGunState extends State<EditDataGun> {
 
     return BlocConsumer<AppCubit, AppStates>(listener: (context, state) {
       if (state is AppUpdateDatabaseState) {
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => GunList()),
+            ModalRoute.withName('/'));
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -70,7 +75,7 @@ class _EditDataGunState extends State<EditDataGun> {
           centerTitle: true,
           title: Text('銃追加', style: TextStyle(color: Colors.black)),
           leading: IconButton(
-              onPressed: () {
+              onPressed:  () {
                 Navigator.pop(context);
               },
               icon: Icon(Icons.arrow_back_ios, color: Colors.black)),
@@ -80,7 +85,8 @@ class _EditDataGunState extends State<EditDataGun> {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(),
-            borderRadius: BorderRadius.circular(45),
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(45), topLeft: Radius.circular(45)),
           ),
           height: 580,
           child: SingleChildScrollView(
@@ -108,7 +114,7 @@ class _EditDataGunState extends State<EditDataGun> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('許可番号')),
                                   Expanded(
@@ -131,7 +137,7 @@ class _EditDataGunState extends State<EditDataGun> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('種類')),
                                   Expanded(
@@ -153,7 +159,7 @@ class _EditDataGunState extends State<EditDataGun> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('銃番号')),
                                   Expanded(
@@ -175,7 +181,7 @@ class _EditDataGunState extends State<EditDataGun> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('商品名等')),
                                   Expanded(
@@ -197,7 +203,7 @@ class _EditDataGunState extends State<EditDataGun> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('定号実包')),
                                   Expanded(
@@ -234,7 +240,7 @@ class _EditDataGunState extends State<EditDataGun> {
                         );
                       }
                     },
-                    child: Image.asset('assets/images/image_edit.png')),
+                    child: Image.asset('assets/images/image_true.png')),
                 Padding(
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom)),

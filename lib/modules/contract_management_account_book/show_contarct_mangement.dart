@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
+import 'package:intl/intl.dart';
 
-class ShowContractManagement extends StatelessWidget {
+class ShowContractManagement extends StatefulWidget {
   int? id;
   String? permissionNumber;
   String? gunNumber;
@@ -39,11 +40,23 @@ class ShowContractManagement extends StatelessWidget {
   });
 
   @override
+  _ShowContractManagementState createState() => _ShowContractManagementState();
+}
+
+class _ShowContractManagementState extends State<ShowContractManagement> {
+  bool isClicked = true;
+  Color color = Colors.white;
+  Color color2 = Colors.white;
+  Color color3 = Colors.white;
+  Color textColor = Colors.black;
+  Color textColor2 = Colors.black;
+  Color textColor3 = Colors.black;
+  @override
   Widget build(BuildContext context) {
-    print(id);
-    print(permissionNumber);
-    print(storageName);
-    print(title);
+    print(widget.id);
+    print(widget.permissionNumber);
+    print(widget.storageName);
+    print(widget.title);
     print('#############');
 
     return BlocConsumer<AppCubit, AppStates>(
@@ -56,7 +69,7 @@ class ShowContractManagement extends StatelessWidget {
               backgroundColor: Colors.transparent,
               elevation: 0,
               centerTitle: true,
-              title: Text(permissionNumber ?? '', style: TextStyle(color: Colors.black)),
+              title: Text(widget.permissionNumber ?? '', style: TextStyle(color: Colors.black)),
               leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -73,7 +86,7 @@ class ShowContractManagement extends StatelessWidget {
                       children: [
                         Text('期間：'),
                         SizedBox(width: 5),
-                        Text('平成30年10月1日～令和３年10月26日'),
+                        Text('${DateFormat("yyyy/MM/dd").format(DateTime.now())}'),
                       ],
                     ),
                   ),
@@ -94,7 +107,7 @@ class ShowContractManagement extends StatelessWidget {
                       children: [
                         Text('住所：'),
                         SizedBox(width: 5),
-                        Text(addressUser ?? ''),
+                        Text(widget.addressUser ?? ''),
                       ],
                     ),
                   ),
@@ -105,7 +118,7 @@ class ShowContractManagement extends StatelessWidget {
                       children: [
                         Text('氏名：'),
                         SizedBox(width: 5),
-                        Text(fullName ?? ''),
+                        Text(widget.fullName ?? ''),
                       ],
                     ),
                   ),
@@ -116,7 +129,7 @@ class ShowContractManagement extends StatelessWidget {
                       children: [
                         Text('電話番号：'),
                         SizedBox(width: 5),
-                        Text(telephoneNumber ?? ''),
+                        Text(widget.telephoneNumber ?? ''),
                       ],
                     ),
                   ),
@@ -181,7 +194,7 @@ class ShowContractManagement extends StatelessWidget {
           child: Row(
             children: [
               Text('許可番号：'),
-              Text(permissionNumber ?? ''),
+              Text(widget.permissionNumber ?? ''),
             ],
           ),
         ),
@@ -191,7 +204,7 @@ class ShowContractManagement extends StatelessWidget {
           child: Row(
             children: [
               Text('銃番号：'),
-              Text(gunNumber ?? ''),
+              Text(widget.gunNumber ?? ''),
             ],
           ),
         ),
@@ -201,7 +214,7 @@ class ShowContractManagement extends StatelessWidget {
           child: Row(
             children: [
               Text('商品名等：'),
-              Text(productAndName ?? ''),
+              Text(widget.productAndName ?? ''),
             ],
           ),
         ),
@@ -245,9 +258,9 @@ class ShowContractManagement extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(fullName ?? ''),
+                  Text(widget.fullName ?? ''),
                   SizedBox(width: 10),
-                  Text(addressUser ?? ''),
+                  Text(widget.addressUser ?? ''),
                 ],
               ),
             ),
@@ -267,22 +280,22 @@ class ShowContractManagement extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(storageName ?? ''),
+                      Text(widget.storageName ?? ''),
                       SizedBox(height: 15),
-                      Text(storageName ?? ''),
+                      Text(widget.storageName ?? ''),
                       SizedBox(height: 15),
-                      Text(storageName ?? ''),
+                      Text(widget.storageName ?? ''),
                     ],
                   ),
                   SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(address ?? ''),
+                      Text(widget.address ?? ''),
                       SizedBox(height: 15),
-                      Text(address ?? ''),
+                      Text(widget.address ?? ''),
                       SizedBox(height: 15),
-                      Text(address ?? ''),
+                      Text(widget.address ?? ''),
                     ],
                   ),
                 ],
@@ -317,16 +330,112 @@ class ShowContractManagement extends StatelessWidget {
             SizedBox(height: 10),
             Text('受払一覧'),
             SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.only(right: 25, left: 25),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('許可'),
-                  Text('無許可'),
-                  Text('有害駆除'),
-                ],
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 240,
+                  height: 28,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.blue)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isClicked = !isClicked;
+                              color = Colors.blue;
+                              color2 = Colors.white;
+                              color3 = Colors.white;
+                              textColor = Colors.white;
+                              textColor2 = Colors.black;
+                              textColor3 = Colors.black;
+                            });
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(12),
+                                      bottomLeft: Radius.circular(12)),
+                                  color:
+                                  (isClicked = true) ? color : Colors.white,
+                                  border: Border.all(color: Colors.blue)),
+                              width: 80,
+
+                              child: Center(
+                                  child: Text(
+                                    '許可',
+                                    style: TextStyle(
+                                      color: (isClicked = true)
+                                          ? textColor
+                                          : Colors.black,
+                                    ),
+                                  )))),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isClicked = !isClicked;
+                            color2 = Colors.blue;
+                            color = Colors.white;
+                            color3 = Colors.white;
+                            textColor = Colors.black;
+                            textColor2 = Colors.white;
+                            textColor3 = Colors.black;
+                          });
+                        },
+                        child: Container(
+                            decoration: BoxDecoration(
+                                color:
+                                (isClicked = true) ? color2 : Colors.white,
+                                border: Border.all(color: Colors.blue)),
+                            width: 80,
+
+                            child: Center(
+                              child: Text(
+                                '無許可',
+                                style: TextStyle(
+                                  color: (isClicked = true)
+                                      ? textColor2
+                                      : Colors.black,
+                                ),
+                              ),
+                            )),
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isClicked = !isClicked;
+                              color3 = Colors.blue;
+                              color2 = Colors.white;
+                              color = Colors.white;
+                              textColor = Colors.black;
+                              textColor2 = Colors.black;
+                              textColor3 = Colors.white;
+                            });
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(topRight: Radius.circular(12),
+                                      bottomRight: Radius.circular(12)),
+                                  color: (isClicked = true)
+                                      ? color3
+                                      : Colors.white,
+                                  border: Border.all(color: Colors.blue)),
+                              width: 75,
+
+                              child: Center(
+                                  child: Text(
+                                    '有害駆除',
+                                    style: TextStyle(
+                                        color: (isClicked = true)
+                                            ? textColor3
+                                            : Colors.black),
+                                  )))),
+                    ],
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 15),
             Padding(
@@ -383,25 +492,7 @@ class ShowContractManagement extends StatelessWidget {
                 },
                 children: [
                   TableRow(children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('令和3年10月２９日'),
-                            SizedBox(height: 10),
-                            Text('許可'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                          ],
-                        ),
-                      ),
-                    ),
+                    WidgetTable1(),
                     Container(
                       height: 150,
                       width: 150,
@@ -438,25 +529,7 @@ class ShowContractManagement extends StatelessWidget {
                 },
                 children: [
                   TableRow(children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('令和3年10月２９日'),
-                            SizedBox(height: 10),
-                            Text('許可'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                          ],
-                        ),
-                      ),
-                    ),
+                  WidgetTable1(),
                     Container(
                       height: 150,
                       width: 150,
@@ -481,25 +554,7 @@ class ShowContractManagement extends StatelessWidget {
                 },
                 children: [
                   TableRow(children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('令和3年10月２９日'),
-                            SizedBox(height: 10),
-                            Text('許可'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                          ],
-                        ),
-                      ),
-                    ),
+                    WidgetTable1(),
                     Container(
                       height: 150,
                       width: 150,
@@ -524,25 +579,7 @@ class ShowContractManagement extends StatelessWidget {
                 },
                 children: [
                   TableRow(children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('令和3年10月２９日'),
-                            SizedBox(height: 10),
-                            Text('許可'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                          ],
-                        ),
-                      ),
-                    ),
+                    WidgetTable1(),
                     Container(
                       height: 150,
                       width: 150,
@@ -567,25 +604,7 @@ class ShowContractManagement extends StatelessWidget {
                 },
                 children: [
                   TableRow(children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10, top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('令和3年10月２９日'),
-                            SizedBox(height: 10),
-                            Text('許可'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                            SizedBox(height: 10),
-                            Text('○○銃砲店'),
-                          ],
-                        ),
-                      ),
-                    ),
+                    WidgetTable1(),
                     Container(
                       height: 150,
                       width: 150,
@@ -599,6 +618,28 @@ class ShowContractManagement extends StatelessWidget {
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget WidgetTable1() {
+    return Container(
+      height: 150,
+      width: 150,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, top: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('${DateFormat("yyyy/MM/dd").format(DateTime.now())}'),
+            SizedBox(height: 10),
+            Text('許可'),
+            SizedBox(height: 10),
+            Text(widget.storageName ?? ''),
+            SizedBox(height: 10),
+            Text(widget.address ?? ''),
           ],
         ),
       ),

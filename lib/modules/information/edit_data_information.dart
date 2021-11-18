@@ -76,7 +76,7 @@ class _EditDataInformationState extends State<EditDataInformation> {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(),
-            borderRadius: BorderRadius.circular(45),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(45),topLeft: Radius.circular(45)),
           ),
           height: 580,
           child: SingleChildScrollView(
@@ -95,7 +95,7 @@ class _EditDataInformationState extends State<EditDataInformation> {
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('ユーザー')),
                                   Expanded(
@@ -117,7 +117,7 @@ class _EditDataInformationState extends State<EditDataInformation> {
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('氏名')),
                                   Expanded(
@@ -139,7 +139,7 @@ class _EditDataInformationState extends State<EditDataInformation> {
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('Title')),
                                   Expanded(
@@ -161,7 +161,7 @@ class _EditDataInformationState extends State<EditDataInformation> {
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('電話番号')),
                                   Expanded(
@@ -183,7 +183,7 @@ class _EditDataInformationState extends State<EditDataInformation> {
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Expanded(flex: 1, child: Text('住所')),
                                   Expanded(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gun_management/modules/storage_place/storage_place.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
 
@@ -42,7 +43,10 @@ class _EditDataStorageState extends State<EditDataStorage> {
 
     return BlocConsumer<AppCubit, AppStates>(listener: (context, state) {
       if (state is AppUpdateDatabaseState) {
-        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => StoragePlace()),
+            ModalRoute.withName('/'));
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -62,7 +66,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(),
-            borderRadius: BorderRadius.circular(45),
+            borderRadius: BorderRadius.only(topRight: Radius.circular(45),topLeft: Radius.circular(45)),
           ),
           height: 580,
           child: SingleChildScrollView(
@@ -90,7 +94,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text('許可番号'),
                                   Container(
@@ -112,7 +116,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
                               Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text('種類'),
                                   Container(
@@ -178,7 +182,7 @@ class _EditDataStorageState extends State<EditDataStorage> {
                         );
                       }
                     },
-                    child: Image.asset('assets/images/image_edit.png')),
+                    child: Image.asset('assets/images/image_true.png')),
                 Padding(
                     padding: EdgeInsets.only(
                         bottom: MediaQuery.of(context).viewInsets.bottom)),
