@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/style/color.dart';
 import 'package:intl/intl.dart';
 
@@ -36,8 +39,7 @@ class PaymentEditing extends StatefulWidget {
   });
 
   @override
-  _PaymentEditingState createState() =>
-      _PaymentEditingState(storageName, address);
+  _PaymentEditingState createState() => _PaymentEditingState();
 }
 
 class _PaymentEditingState extends State<PaymentEditing> {
@@ -51,38 +53,36 @@ class _PaymentEditingState extends State<PaymentEditing> {
 
   var number = TextEditingController();
 
-  String? storageName2;
+  /*String? storageName2;
   String? address2;
 
-  _PaymentEditingState(this.storageName2, this.address2);
+  _PaymentEditingState(this.storageName2, this.address2);*/
 
-  late String selectedSubject;
-  late final List<String>? subjects;
-
-  // final item = ['1','2','3'];
-  //  final item = [storageName2 ?? '',address2 ?? ''];
   String? value1;
+
+  List item = [];
+
+  List itemAddress = [];
+
+  int x = 0;
+
 
   @override
   void initState() {
-    subjects = [widget.storageName ?? '', widget.address ?? ''];
+    var tasks = AppCubit.get(context).newTasks;
+    tasks.forEach((element) {
+      item.add(element['storageName']);
+    });
+    tasks.forEach((element) {
+      itemAddress.add(element['address']);
+    });
 
-    //selectedSubject = widget.storageName ?? 'null';
-    selectedSubject = widget.storageName ?? '';
+    value1 = item[0];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final item = [storageName2 ?? '', address2 ?? ''];
-    print(widget.id);
-    print(widget.permissionNumber);
-    print(widget.storageName);
-    print(widget.title);
-    print(widget.storageName);
-    print(widget.address);
-    print(address2);
-    print('#############');
 
     return Scaffold(
       appBar: AppBar(
@@ -140,27 +140,26 @@ class _PaymentEditingState extends State<PaymentEditing> {
                     ),
                     widget6(
                       '場所',
-                      (storageName2 == null ||
-                              address2 == null ||
-                              storageName2 == 'null' ||
-                              address2 == 'null')
-                          ? Container()
-                          : DropdownButton<String?>(
-                              iconEnabledColor: Colors.white,
-                              value: value1,
-                              onChanged: (value) {
-                                setState(() {
-                                  this.value1 = value ?? '';
-                                });
-                              },
-                              items:
-                                  item.map<DropdownMenuItem<String?>>((value) {
-                                return DropdownMenuItem(
-                                  child: Text(value),
-                                  value: value,
-                                );
-                              }).toList(),
+                      DropdownButton<String?>(
+                        iconEnabledColor: Colors.white,
+                        value: value1,
+                        dropdownColor: Colors.grey[600],
+                        onChanged: (value) {
+                          setState(() {
+                            this.value1 = value ?? '';
+                            x = item.indexOf(value);
+                          });
+                        },
+                        items: item.map<DropdownMenuItem<String?>>((value) {
+                          return DropdownMenuItem(
+                            child: Text(
+                              value ?? '',
+                              style: TextStyle(color: Colors.white),
                             ),
+                            value: value,
+                          );
+                        }).toList(),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
@@ -170,10 +169,12 @@ class _PaymentEditingState extends State<PaymentEditing> {
                         height: 30,
                       ),
                     ),
+
                     widget6(
                       '所在地',
                       Text(
-                        widget.address ?? '',
+                      //  widget.address ?? '',
+                          itemAddress[x] ?? '',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -191,7 +192,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
               Material(
                 color: primaryColor,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10,right: 10),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   child: TabBar(
                       labelColor: Colors.white,
                       indicatorColor: Colors.white,
@@ -252,72 +253,6 @@ class _PaymentEditingState extends State<PaymentEditing> {
     );
   }
 
-  /* Widget dropDown() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        children: [
-          Text(
-            '所',
-            style: TextStyle(color: Colors.white),
-          ),
-          SizedBox(width: 40),
-          DropdownButton<String?>(
-            iconEnabledColor: Colors.white,
-            value: value1,
-            onChanged: (value) {
-              setState(() {
-                this.value1 = value ?? '';
-              });
-            },
-            items: item.map<DropdownMenuItem<String?>>((value) {
-              return DropdownMenuItem(
-                child: Text(value),
-                value: value,
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }*/
-
-  /*Widget dropDown2() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
-      child: Row(
-        children: [
-          Text(
-            '所',
-            style: TextStyle(color: Colors.white),
-          ),
-          SizedBox(width: 40),
-          DropdownButton<String>(
-
-            value: value1,
-            items: item.map(buildMenueItem).toList(),
-            onChanged: (value) {
-              setState(() {
-                this.value1 = value;
-              });
-            },
-            iconEnabledColor: Colors.white,
-
-
-
-          ),
-        ],
-      ),
-    );
-  }*/
-
-  DropdownMenuItem<String> buildMenueItem(String item) {
-    return DropdownMenuItem(
-      value: item,
-      child: Text(item),
-    );
-  }
-
   Widget widget7({bool? visable = true}) {
     return Padding(
       padding: const EdgeInsets.only(left: 42, top: 50, right: 20),
@@ -348,11 +283,11 @@ class _PaymentEditingState extends State<PaymentEditing> {
           SizedBox(height: 20),
           Row(
             children: [
-              Expanded(flex: 1,child: Text('譲受別')),
-
-              Expanded(flex: 2,
+              Expanded(flex: 1, child: Text('譲受別')),
+              Expanded(
+                flex: 2,
                 child: Container(
-                 // width: 210,
+                  // width: 210,
                   height: 28,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(7),
@@ -379,10 +314,11 @@ class _PaymentEditingState extends State<PaymentEditing> {
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(7),
                                         bottomLeft: Radius.circular(7)),
-                                    color:
-                                        (isClicked = true) ? color : Colors.white,
+                                    color: (isClicked = true)
+                                        ? color
+                                        : Colors.white,
                                     border: Border.all(color: Colors.blue)),
-                               // width: 75,
+                                // width: 75,
                                 child: Center(
                                     child: Text(
                                   '許可',
@@ -409,9 +345,11 @@ class _PaymentEditingState extends State<PaymentEditing> {
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                  color: (isClicked = true) ? color2 : Colors.white,
+                                  color: (isClicked = true)
+                                      ? color2
+                                      : Colors.white,
                                   border: Border.all(color: Colors.blue)),
-                             // width: 75,
+                              // width: 75,
                               child: Center(
                                 child: Text(
                                   '無許可',
@@ -443,8 +381,9 @@ class _PaymentEditingState extends State<PaymentEditing> {
                                     borderRadius: BorderRadius.only(
                                         topRight: Radius.circular(7),
                                         bottomRight: Radius.circular(7)),
-                                    color:
-                                        (isClicked = true) ? color3 : Colors.white,
+                                    color: (isClicked = true)
+                                        ? color3
+                                        : Colors.white,
                                     border: Border.all(color: Colors.blue)),
                                 //width: 75,
                                 child: Center(
@@ -466,16 +405,16 @@ class _PaymentEditingState extends State<PaymentEditing> {
           SizedBox(height: 20),
           Row(
             children: [
-          Expanded(flex: 1,child: Text('数量')),
-            //  SizedBox(width: 70),
-              Expanded(flex: 2,
+              Expanded(flex: 1, child: Text('数量')),
+              //  SizedBox(width: 70),
+              Expanded(
+                flex: 2,
                 child: Container(
-
                   child: TextFormField(
                     controller: number,
                     keyboardType: TextInputType.number,
-                    decoration:
-                        InputDecoration(hintText: '0', border: InputBorder.none),
+                    decoration: InputDecoration(
+                        hintText: '0', border: InputBorder.none),
                   ),
                 ),
               )
@@ -486,13 +425,14 @@ class _PaymentEditingState extends State<PaymentEditing> {
           Row(
             children: [
               Expanded(flex: 1, child: Text('備考')),
-             // SizedBox(width: 70),
-              Expanded(flex: 2,
+              // SizedBox(width: 70),
+              Expanded(
+                flex: 2,
                 child: Container(
-                   // width: 210,
+                    // width: 210,
                     child: Text(
-                      '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
-                    )),
+                  '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
+                )),
               ),
             ],
           ),
