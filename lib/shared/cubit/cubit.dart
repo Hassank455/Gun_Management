@@ -40,11 +40,6 @@ class AppCubit extends Cubit<AppStates> {
       'todo.db',
       version: 1,
       onCreate: (database, version) {
-        // id integer
-        // title String
-        // date String
-        // time String
-        // status String
 
         print('database created');
         database
@@ -55,10 +50,19 @@ class AppCubit extends Cubit<AppStates> {
         }).catchError((error) {
           print('Error When Creating Table ${error.toString()}');
         });
+        database
+            .execute(
+            'CREATE TABLE payment (id INTEGER PRIMARY KEY, address1 TEXT, address2 TEXT, gunProduct TEXT, compatibleCartridge TEXT, price TEXT)')
+            .then((value) {
+          print('table2 created');
+        }).catchError((error) {
+          print('Error When Creating Table2 ${error.toString()}');
+        });
       },
       onOpen: (database)
       {
         getDataFromDatabase(database);
+        getDataFromDatabase2(database);
         print('database opened');
       },
     ).then((value) {
@@ -84,11 +88,39 @@ class AppCubit extends Cubit<AppStates> {
         emit(AppInsertDatabaseState());
 
         getDataFromDatabase(database);
+        getDataFromDatabase2(database);
       }).catchError((error) {
         print('Error When Inserting New Record ${error.toString()}');
       });
 
     //  return null;
+    });
+  }
+
+
+  Future insertToDatabaseTable2({
+    String? address1,
+    String? address2,
+    String? gunProduct,
+    String? compatibleCartridge,
+    String? price,
+  }) async {
+    await database!.transaction((txn)async {
+      await txn
+          .rawInsert(
+        'INSERT INTO payment(address1, address2, gunProduct, compatibleCartridge, price) VALUES("$address1", "$address2", "$gunProduct", "$compatibleCartridge", "$price")',
+      )
+          .then((value) {
+        print('$value inserted successfully');
+        emit(AppInsertDatabaseState());
+
+        getDataFromDatabase(database);
+        getDataFromDatabase2(database);
+      }).catchError((error) {
+        print('Error When Inserting New Record ${error.toString()}');
+      });
+
+      //  return null;
     });
   }
 
@@ -106,6 +138,7 @@ class AppCubit extends Cubit<AppStates> {
         emit(AppInsertDatabaseState());
 
         getDataFromDatabase(database);
+        getDataFromDatabase2(database);
       }).catchError((error) {
         print('Error When Inserting New Record ${error.toString()}');
       });
@@ -113,7 +146,6 @@ class AppCubit extends Cubit<AppStates> {
       //  return null;
     });
   }
-
 
   Future insertToDatabaseInfromation({
     String? user,
@@ -132,6 +164,7 @@ class AppCubit extends Cubit<AppStates> {
         emit(AppInsertDatabaseState());
 
         getDataFromDatabase(database);
+        getDataFromDatabase2(database);
       }).catchError((error) {
         print('Error When Inserting New Record ${error.toString()}');
       });
@@ -166,6 +199,24 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  void getDataFromDatabase2(database)
+  {
+
+    doneTasks = [];
+
+    emit(AppGetDatabaseLoadingState());
+
+    database.rawQuery('SELECT * FROM payment').then((value) {
+
+      value.forEach((element)
+      {
+          doneTasks.add(element);
+      });
+
+      emit(AppGetDatabaseState());
+    });
+  }
+
   void updateData({
     String? permissionNumber,
     String? kinds,
@@ -181,6 +232,27 @@ class AppCubit extends Cubit<AppStates> {
     ).then((value)
     {
       getDataFromDatabase(database);
+      getDataFromDatabase2(database);
+      emit(AppUpdateDatabaseState());
+    });
+  }
+
+  void updateData2({
+    String? address1,
+    String? address2,
+    String? gunProduct,
+    String? compatibleCartridge,
+    String? price,
+    required int id,
+  }) async
+  {
+    database!.rawUpdate(
+      'UPDATE payment SET address1 = ?, address2 = ?, gunProduct = ?, compatibleCartridge = ?, price = ? WHERE id = ?',
+      ['$address1', '$address2', '$gunProduct', '$compatibleCartridge', '$price', id],
+    ).then((value)
+    {
+      getDataFromDatabase(database);
+      getDataFromDatabase2(database);
       emit(AppUpdateDatabaseState());
     });
   }
@@ -198,6 +270,7 @@ class AppCubit extends Cubit<AppStates> {
     ).then((value)
     {
       getDataFromDatabase(database);
+      getDataFromDatabase2(database);
       emit(AppUpdateDatabaseState());
     });
   }
@@ -217,6 +290,7 @@ class AppCubit extends Cubit<AppStates> {
     ).then((value)
     {
       getDataFromDatabase(database);
+      getDataFromDatabase2(database);
       emit(AppUpdateDatabaseState());
     });
   }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
@@ -7,31 +5,14 @@ import 'package:gun_management/shared/cubit/states.dart';
 import 'package:gun_management/shared/style/color.dart';
 import 'package:intl/intl.dart';
 
-class PaymentEditing extends StatefulWidget {
-  int? id;
-  String? address1;
-  String? address2;
-  String? gunProduct;
-  String? compatibleCartridge;
-  String? price;
-
-
-  PaymentEditing({
-    this.id,
-    this.address1,
-    this.address2,
-    this.gunProduct,
-    this.compatibleCartridge,
-    this.price,
-
-  });
+class AddCartridgeReceipt extends StatefulWidget {
+  const AddCartridgeReceipt({Key? key}) : super(key: key);
 
   @override
-  _PaymentEditingState createState() => _PaymentEditingState();
+  _AddCartridgeReceiptState createState() => _AddCartridgeReceiptState();
 }
 
-
-class _PaymentEditingState extends State<PaymentEditing> {
+class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
   bool isClicked = true;
   Color color = Colors.white;
   Color color2 = Colors.white;
@@ -40,7 +21,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
   Color textColor2 = Colors.black;
   Color textColor3 = Colors.black;
 
-  TextEditingController number = TextEditingController();
+  var number = TextEditingController();
 
   /*String? storageName2;
   String? address2;
@@ -49,7 +30,6 @@ class _PaymentEditingState extends State<PaymentEditing> {
 
   String? value1;
   String? value2;
-  String? value3;
 
   List item = [];
   List itemAddress = [];
@@ -77,20 +57,13 @@ class _PaymentEditingState extends State<PaymentEditing> {
     });
 
     if(item.isNotEmpty){
-      //value1 = widget.address1;
       value1 = item[0];
     }
 
-    number.text = widget.price.toString();
-
     if(gunProductName.isNotEmpty){
-      //value2 = widget.gunProduct;
       value2 = gunProductName[0];
     }
-    if(compatibleCartridge.isNotEmpty){
-      //value2 = widget.gunProduct;
-      value3 = compatibleCartridge[0];
-    }
+
     super.initState();
   }
 
@@ -100,7 +73,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
     print(compatibleCartridge);*/
 
     return BlocConsumer<AppCubit, AppStates>(listener: (context, state) {
-      if (state is AppUpdateDatabaseState) {
+      if (state is AppInsertDatabaseState) {
         Navigator.pop(context);
       }
     }, builder: (context, state) {
@@ -239,7 +212,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                   child: TabBarView(
                     children: [
                       widget7(),
-                      widget7(visable: false,visable2: false),
+                      widget7(visable: false),
                       widget7(),
                       widget7(),
                     ],
@@ -248,8 +221,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                 SizedBox(height: 20),
                 GestureDetector(
                     onTap: () {
-                      AppCubit.get(context).updateData2(
-                        id: widget.id!,
+                      AppCubit.get(context).insertToDatabaseTable2(
                         address1: value1,
                         address2: itemAddress[x],
                         gunProduct: value2,
@@ -289,7 +261,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
     );
   }
 
-  Widget widget7({bool? visable = true,bool? visable2 = true}) {
+  Widget widget7({bool? visable = true}) {
     return Padding(
       padding: const EdgeInsets.only(left: 42, top: 20, right: 20),
       child: Column(
@@ -297,71 +269,46 @@ class _PaymentEditingState extends State<PaymentEditing> {
         children: [
           (visable == true)
               ? Row(
-            children: [
-              Expanded(flex: 1, child: Text('銃')),
-              // SizedBox(width: 70),
-              Expanded(
-                flex: 2,
-                child: (gunProductName.isNotEmpty) ? DropdownButton<String?>(
-                  iconEnabledColor: Colors.black,
-                  value: value2 ?? '',
-                  dropdownColor: Colors.white,
-                  onChanged: (value) {
-                    setState(() {
-                      this.value2 = value ?? '';
-                      y = gunProductName.indexOf(value);
-                    });
-                  },
-                  items: gunProductName
-                      .map<DropdownMenuItem<String?>>((value) {
-                    return DropdownMenuItem(
-                      child: Text(
-                        value ?? '',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      value: value,
-                    );
-                  }).toList(),
-                ) : Container(),
-              ),
-            ],
-          )
+                  children: [
+                    Expanded(flex: 1, child: Text('銃')),
+                    // SizedBox(width: 70),
+                    Expanded(
+                      flex: 2,
+                      child: (gunProductName.isNotEmpty) ? DropdownButton<String?>(
+                        iconEnabledColor: Colors.black,
+                        value: value2 ?? '',
+                        dropdownColor: Colors.white,
+                        onChanged: (value) {
+                          setState(() {
+                            this.value2 = value ?? '';
+                            y = gunProductName.indexOf(value);
+                          });
+                        },
+                        items: gunProductName
+                            .map<DropdownMenuItem<String?>>((value) {
+                          return DropdownMenuItem(
+                            child: Text(
+                              value ?? '',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            value: value,
+                          );
+                        }).toList(),
+                      ) : Container(),
+                    ),
+                  ],
+                )
               : Container(),
           (visable == true)
               ? Divider(color: Colors.grey[400], thickness: 2, height: 30)
               : Container(),
           // SizedBox(height: 10),
-
           Row(
             children: [
               Expanded(flex: 1, child: Text('実包')),
               //SizedBox(width: 70),
-              (visable2 == true) ? Expanded(flex: 2,
-                  child: Text(
-                  (compatibleCartridge.isNotEmpty) ? compatibleCartridge[y] ?? 'null' : 'null')
-              ) : Expanded(flex: 2,
-                child: DropdownButton<String?>(
-                  iconEnabledColor: Colors.black,
-                  value: value3 ?? '',
-                  dropdownColor: Colors.white,
-                  onChanged: (value) {
-                    setState(() {
-                      this.value3 = value ?? '';
-                      y = compatibleCartridge.indexOf(value);
-                    });
-                  },
-                  items: compatibleCartridge
-                      .map<DropdownMenuItem<String?>>((value) {
-                    return DropdownMenuItem(
-                      child: Text(
-                        value ?? '',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      value: value,
-                    );
-                  }).toList(),
-                ),
-              ),
+              Expanded(flex: 2, child: Text(
+                  (compatibleCartridge.isNotEmpty) ? compatibleCartridge[y] ?? 'null' : 'null')),
             ],
           ),
           Divider(color: Colors.grey[400], thickness: 2, height: 30),
@@ -406,13 +353,13 @@ class _PaymentEditingState extends State<PaymentEditing> {
                                 // width: 75,
                                 child: Center(
                                     child: Text(
-                                      '許可',
-                                      style: TextStyle(
-                                        color: (isClicked = true)
-                                            ? textColor
-                                            : Colors.black,
-                                      ),
-                                    )))),
+                                  '許可',
+                                  style: TextStyle(
+                                    color: (isClicked = true)
+                                        ? textColor
+                                        : Colors.black,
+                                  ),
+                                )))),
                       ),
                       Expanded(
                         flex: 1,
@@ -473,12 +420,12 @@ class _PaymentEditingState extends State<PaymentEditing> {
                                 //width: 75,
                                 child: Center(
                                     child: Text(
-                                      '有害駆除',
-                                      style: TextStyle(
-                                          color: (isClicked = true)
-                                              ? textColor3
-                                              : Colors.black),
-                                    )))),
+                                  '有害駆除',
+                                  style: TextStyle(
+                                      color: (isClicked = true)
+                                          ? textColor3
+                                          : Colors.black),
+                                )))),
                       ),
                     ],
                   ),
@@ -514,10 +461,10 @@ class _PaymentEditingState extends State<PaymentEditing> {
               Expanded(
                 flex: 2,
                 child: Container(
-                  // width: 210,
+                    // width: 210,
                     child: Text(
-                      '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
-                    )),
+                  '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
+                )),
               ),
             ],
           ),
@@ -526,6 +473,4 @@ class _PaymentEditingState extends State<PaymentEditing> {
       ),
     );
   }
-
-
 }

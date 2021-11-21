@@ -562,19 +562,12 @@ Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
             context,
             MaterialPageRoute(
                 builder: (_) => PaymentEditing(
-                      permissionNumber: model?['permissionNumber'] ?? 'null',
-                      kinds: model?['kinds'] ?? 'null',
-                      gunNumber: model?['gunNumber'] ?? 'null',
-                      productAndName: model?['productAndName'] ?? 'null',
-                      standardCartridge: model?['standardCartridge'] ?? 'null',
-                      id: model?['id'] ?? 'null',
-                      user: model?['user'] ?? 'null',
-                      telephoneNumber: model?['telephoneNumber'] ?? 'null',
-                      storageName: model?['storageName'] ?? 'null',
-                      fullName: model?['fullName'] ?? 'null',
-                      addressUser: model?['addressUser'] ?? 'null',
-                      title: model?['title'] ?? 'null',
-                      address: model?['address'] ?? 'null',
+                  id: model?['id'] ?? 'null',
+                  address1: model?['address1'] ?? 'null',
+                  address2: model?['address2'] ?? 'null',
+                  gunProduct: model?['gunProduct'] ?? 'null',
+                  compatibleCartridge: model?['compatibleCartridge'] ?? 'null',
+                  price: model?['price'] ?? 'null',
                     )));
       },
       child: Dismissible(
@@ -604,12 +597,12 @@ Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
                       ),
                     ),SizedBox(height: 7),
                     Text(
-                      '消費：${model?['productAndName']}',
+                      '消費：${model?['address1']}',
                       style: TextStyle(
                        // color: Colors.grey,
                       ),
                     ),SizedBox(height: 7),
-                    Text('保管場所：${model?['storageName']}'),
+                    Text('保管場所：${model?['address2']}'),
                     SizedBox(height: 7),
                     Text('備考：米国 個人消費支出（ＰＣＥコア・デフレーター\,四半期雇用コスト指数）'),
                   ],
