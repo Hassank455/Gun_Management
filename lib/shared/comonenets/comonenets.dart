@@ -22,17 +22,6 @@ Widget buildTaskItem(Map model, context) => GestureDetector(
                       standardCartridge: model['standardCartridge'],
                       id: model['id'],
                     )));
-        /*Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (_) => EditDataGun(
-                      permissionNumber: model['permissionNumber'],
-                      kinds: model['kinds'],
-                      gunNumber: model['gunNumber'],
-                      productAndName: model['productAndName'],
-                      standardCartridge: model['standardCartridge'],
-                      id: model['id'],
-                    )));*/
       },
       child: Dismissible(
         key: Key(model['id'].toString()),
@@ -44,6 +33,7 @@ Widget buildTaskItem(Map model, context) => GestureDetector(
                 width: 20.0,
               ),
               Expanded(
+
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,10 +54,10 @@ Widget buildTaskItem(Map model, context) => GestureDetector(
                   ],
                 ),
               ),
-              SizedBox(
+              /*  SizedBox(
                 width: 20.0,
               ),
-              /*   IconButton(
+                 IconButton(
                 onPressed: () {
                   AppCubit.get(context).updateData(
                     status: 'done',
@@ -433,7 +423,7 @@ Widget buildTaskItemScreen4(Map model, context) => GestureDetector(
                     Row(
                       children: [
                         Text(
-                          '${model['permissionNumber']}',
+                          '${model['standardCartridge']}',
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
@@ -571,7 +561,7 @@ Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
                     )));
       },
       child: Dismissible(
-        key: Key(model?['id'].toString() ?? ''),
+        key: Key(model!['id'].toString()),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
@@ -597,12 +587,12 @@ Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
                       ),
                     ),SizedBox(height: 7),
                     Text(
-                      '消費：${model?['address1']}',
+                      '消費：${model['address1']}',
                       style: TextStyle(
                        // color: Colors.grey,
                       ),
                     ),SizedBox(height: 7),
-                    Text('保管場所：${model?['address2']}'),
+                    Text('保管場所：${model['address2']}'),
                     SizedBox(height: 7),
                     Text('備考：米国 個人消費支出（ＰＣＥコア・デフレーター\,四半期雇用コスト指数）'),
                   ],

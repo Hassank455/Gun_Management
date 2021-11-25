@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gun_management/modules/cartridge_receipt_and_payment/delete_cartridge_screen.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
 import 'package:gun_management/shared/style/color.dart';
@@ -63,10 +64,11 @@ class _PaymentEditingState extends State<PaymentEditing> {
   @override
   void initState() {
     var tasks = AppCubit.get(context).newTasks;
-    tasks.forEach((element) {
+    var tasksMap = AppCubit.get(context).archivedTasks;
+    tasksMap.forEach((element) {
       item.add(element['storageName'] ?? 'null');
     });
-    tasks.forEach((element) {
+    tasksMap.forEach((element) {
       itemAddress.add(element['address'] ?? 'null');
     });
     tasks.forEach((element) {
@@ -245,7 +247,28 @@ class _PaymentEditingState extends State<PaymentEditing> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.only(right: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => DeleteCartridgeScreen(
+                                  address1: widget.address1,
+                                  address2: widget.address2,
+                                  gunProduct: widget.gunProduct,
+                                  compatibleCartridge: widget.compatibleCartridge,
+                                  price: widget.price,
+                                  id: widget.id,
+                                )));
+                          },
+                          child: Image.asset('assets/images/Trash.png')),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
                 GestureDetector(
                     onTap: () {
                       AppCubit.get(context).updateData2(
@@ -257,7 +280,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                         price: number.text ,
                       );
                     },
-                    child: Image.asset('assets/images/image_true.png')),
+                    child: Image.asset('assets/images/image_edit.png')),
               ],
             ),
           ),

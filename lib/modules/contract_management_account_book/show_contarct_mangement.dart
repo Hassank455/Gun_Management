@@ -69,7 +69,7 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               centerTitle: true,
-              title: Text(widget.permissionNumber ?? '', style: TextStyle(color: Colors.black)),
+              title: Text('${widget.standardCartridge ?? ''} 番', style: TextStyle(color: Colors.black)),
               leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);

@@ -42,14 +42,34 @@ class AppCubit extends Cubit<AppStates> {
       onCreate: (database, version) {
 
         print('database created');
+        // gun Table
         database
             .execute(
-            'CREATE TABLE tasks (id INTEGER PRIMARY KEY, permissionNumber TEXT, kinds TEXT, gunNumber TEXT, productAndName TEXT, standardCartridge TEXT, storageName TEXT, address TEXT, user TEXT, fullName TEXT, title TEXT, telephoneNumber TEXT, addressUser TEXT, status TEXT)')
+            'CREATE TABLE tasks (id INTEGER PRIMARY KEY, permissionNumber TEXT, kinds TEXT, gunNumber TEXT, productAndName TEXT, standardCartridge TEXT, status TEXT)')
             .then((value) {
           print('table created');
         }).catchError((error) {
           print('Error When Creating Table ${error.toString()}');
         });
+        // Storage Table
+        database
+            .execute(
+            'CREATE TABLE storage (id INTEGER PRIMARY KEY, storageName TEXT, address TEXT)')
+            .then((value) {
+          print('storage table created');
+        }).catchError((error) {
+          print('Error When Creating Table2 ${error.toString()}');
+        });
+        // Information Table
+        database
+            .execute(
+            'CREATE TABLE information (id INTEGER PRIMARY KEY, user TEXT, fullName TEXT, title TEXT, telephoneNumber TEXT, addressUser TEXT)')
+            .then((value) {
+          print('Information table created');
+        }).catchError((error) {
+          print('Error When Creating Table2 ${error.toString()}');
+        });
+        // payment Table
         database
             .execute(
             'CREATE TABLE payment (id INTEGER PRIMARY KEY, address1 TEXT, address2 TEXT, gunProduct TEXT, compatibleCartridge TEXT, price TEXT)')
@@ -58,11 +78,14 @@ class AppCubit extends Cubit<AppStates> {
         }).catchError((error) {
           print('Error When Creating Table2 ${error.toString()}');
         });
+
       },
       onOpen: (database)
       {
         getDataFromDatabase(database);
         getDataFromDatabase2(database);
+        getDataFromDatabaseInformation(database);
+        getDataFromDatabaseMap(database);
         print('database opened');
       },
     ).then((value) {
@@ -89,6 +112,8 @@ class AppCubit extends Cubit<AppStates> {
 
         getDataFromDatabase(database);
         getDataFromDatabase2(database);
+        getDataFromDatabaseInformation(database);
+        getDataFromDatabaseMap(database);
       }).catchError((error) {
         print('Error When Inserting New Record ${error.toString()}');
       });
@@ -116,6 +141,8 @@ class AppCubit extends Cubit<AppStates> {
 
         getDataFromDatabase(database);
         getDataFromDatabase2(database);
+        getDataFromDatabaseInformation(database);
+        getDataFromDatabaseMap(database);
       }).catchError((error) {
         print('Error When Inserting New Record ${error.toString()}');
       });
@@ -131,7 +158,7 @@ class AppCubit extends Cubit<AppStates> {
     await database!.transaction((txn)async {
       await txn
           .rawInsert(
-        'INSERT INTO tasks(storageName, address, status) VALUES("$storageName", "$address", "new")',
+        'INSERT INTO storage(storageName, address) VALUES("$storageName", "$address")',
       )
           .then((value) {
         print('$value inserted successfully');
@@ -139,6 +166,8 @@ class AppCubit extends Cubit<AppStates> {
 
         getDataFromDatabase(database);
         getDataFromDatabase2(database);
+        getDataFromDatabaseInformation(database);
+        getDataFromDatabaseMap(database);
       }).catchError((error) {
         print('Error When Inserting New Record ${error.toString()}');
       });
@@ -157,7 +186,7 @@ class AppCubit extends Cubit<AppStates> {
     await database!.transaction((txn)async {
       await txn
           .rawInsert(
-        'INSERT INTO tasks(user, fullName, title, telephoneNumber, addressUser, status) VALUES("$user", "$fullName", "$title", "$telephoneNumber", "$addressUser", "new")',
+        'INSERT INTO information(user, fullName, title, telephoneNumber, addressUser) VALUES("$user", "$fullName", "$title", "$telephoneNumber", "$addressUser")',
       )
           .then((value) {
         print('$value inserted successfully');
@@ -165,6 +194,8 @@ class AppCubit extends Cubit<AppStates> {
 
         getDataFromDatabase(database);
         getDataFromDatabase2(database);
+        getDataFromDatabaseInformation(database);
+        getDataFromDatabaseMap(database);
       }).catchError((error) {
         print('Error When Inserting New Record ${error.toString()}');
       });
@@ -177,8 +208,8 @@ class AppCubit extends Cubit<AppStates> {
   {
     newTasks = [];
     doneTasks = [];
-    informationTasks = [];
-    archivedTasks = [];
+  //  informationTasks = [];
+  //  archivedTasks = [];
 
     emit(AppGetDatabaseLoadingState());
 
@@ -217,6 +248,42 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  void getDataFromDatabaseInformation(database)
+  {
+
+    informationTasks = [];
+
+    emit(AppGetDatabaseLoadingState());
+
+    database.rawQuery('SELECT * FROM information').then((value) {
+
+      value.forEach((element)
+      {
+        informationTasks.add(element);
+      });
+
+      emit(AppGetDatabaseState());
+    });
+  }
+
+  void getDataFromDatabaseMap(database)
+  {
+
+    archivedTasks = [];
+
+    emit(AppGetDatabaseLoadingState());
+
+    database.rawQuery('SELECT * FROM storage').then((value) {
+
+      value.forEach((element)
+      {
+        archivedTasks.add(element);
+      });
+
+      emit(AppGetDatabaseState());
+    });
+  }
+
   void updateData({
     String? permissionNumber,
     String? kinds,
@@ -233,6 +300,8 @@ class AppCubit extends Cubit<AppStates> {
     {
       getDataFromDatabase(database);
       getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
       emit(AppUpdateDatabaseState());
     });
   }
@@ -253,6 +322,8 @@ class AppCubit extends Cubit<AppStates> {
     {
       getDataFromDatabase(database);
       getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
       emit(AppUpdateDatabaseState());
     });
   }
@@ -260,17 +331,18 @@ class AppCubit extends Cubit<AppStates> {
   void updateDataMap({
     String? storageName,
     String? address,
-
     required int id,
   }) async
   {
     database!.rawUpdate(
-      'UPDATE tasks SET storageName = ?, address = ? WHERE id = ?',
+      'UPDATE storage SET storageName = ?, address = ? WHERE id = ?',
       ['$storageName', '$address', id],
     ).then((value)
     {
       getDataFromDatabase(database);
       getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
       emit(AppUpdateDatabaseState());
     });
   }
@@ -285,16 +357,18 @@ class AppCubit extends Cubit<AppStates> {
   }) async
   {
     database!.rawUpdate(
-      'UPDATE tasks SET user = ?, fullName = ?, title = ?, telephoneNumber = ?, addressUser = ? WHERE id = ?',
+      'UPDATE information SET user = ?, fullName = ?, title = ?, telephoneNumber = ?, addressUser = ? WHERE id = ?',
       ['$user', '$fullName', '$title', '$telephoneNumber', '$addressUser', id],
     ).then((value)
     {
       getDataFromDatabase(database);
       getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
       emit(AppUpdateDatabaseState());
     });
   }
-/*
+
   void deleteData({
     required int id,
   }) async
@@ -303,10 +377,59 @@ class AppCubit extends Cubit<AppStates> {
         .then((value)
     {
       getDataFromDatabase(database);
+      getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
       emit(AppDeleteDatabaseState());
     });
   }
 
+
+  void deleteData2({
+    required int id,
+  }) async
+  {
+    database!.rawDelete('DELETE FROM payment WHERE id = ?', [id])
+        .then((value)
+    {
+      getDataFromDatabase(database);
+      getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
+      emit(AppDeleteDatabaseState());
+    });
+  }
+
+  void deleteDataInformation({
+    required int id,
+  }) async
+  {
+    database!.rawDelete('DELETE FROM information WHERE id = ?', [id])
+        .then((value)
+    {
+      getDataFromDatabase(database);
+      getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
+      emit(AppDeleteDatabaseState());
+    });
+  }
+
+  void deleteDataMap({
+    required int id,
+  }) async
+  {
+    database!.rawDelete('DELETE FROM storage WHERE id = ?', [id])
+        .then((value)
+    {
+      getDataFromDatabase(database);
+      getDataFromDatabase2(database);
+      getDataFromDatabaseInformation(database);
+      getDataFromDatabaseMap(database);
+      emit(AppDeleteDatabaseState());
+    });
+  }
+/*
   bool isBottomSheetShown = false;
   IconData fabIcon = Icons.edit;
 

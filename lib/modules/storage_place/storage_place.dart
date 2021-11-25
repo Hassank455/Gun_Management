@@ -14,7 +14,7 @@ class StoragePlace extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          var tasks = AppCubit.get(context).newTasks;
+          var tasks = AppCubit.get(context).archivedTasks;
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,

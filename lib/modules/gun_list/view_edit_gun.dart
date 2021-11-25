@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gun_management/modules/gun_list/delete_gun_screen.dart';
 import 'package:gun_management/modules/gun_list/edit_data_gun.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
@@ -86,6 +87,7 @@ class _ViewEditState extends State<ViewEdit> {
           height: 580,
           child: SingleChildScrollView(
             child: Column(
+
               children: [
                 SizedBox(height: 20),
                 Text(
@@ -115,17 +117,6 @@ class _ViewEditState extends State<ViewEdit> {
                                   Expanded(
                                     flex: 2,
                                     child: Text(editPermissionNumber.text),
-                                    /*child: TextFormField(
-                                      autofocus: true,
-                                      controller: editPermissionNumber,
-                                      keyboardType: TextInputType.text,
-                                      validator: (String? value) {
-                                        if (value!.isEmpty) {
-                                          return '許可番号 空であってはなりません ';
-                                        }
-                                        return null;
-                                      },
-                                    ),*/
                                   ),
                                 ],
                               ),
@@ -139,16 +130,6 @@ class _ViewEditState extends State<ViewEdit> {
                                   Expanded(
                                     flex: 2,
                                     child: Text(editKinds.text),
-                                   /* child: TextFormField(
-                                      controller: editKinds,
-                                      keyboardType: TextInputType.text,
-                                      validator: (String? value) {
-                                        if (value!.isEmpty) {
-                                          return '種類 空であってはなりません ';
-                                        }
-                                        return null;
-                                      },
-                                    ),*/
                                   ),
                                 ],
                               ),
@@ -162,16 +143,6 @@ class _ViewEditState extends State<ViewEdit> {
                                   Expanded(
                                     flex: 2,
                                     child: Text(editGunNumber.text),
-                                    /*child: TextFormField(
-                                      controller: editGunNumber,
-                                      keyboardType: TextInputType.text,
-                                      validator: (String? value) {
-                                        if (value!.isEmpty) {
-                                          return '銃番号 空であってはなりません ';
-                                        }
-                                        return null;
-                                      },
-                                    ),*/
                                   ),
                                 ],
                               ),
@@ -208,16 +179,6 @@ class _ViewEditState extends State<ViewEdit> {
                                   Expanded(
                                     flex: 2,
                                     child: Text(editStandardCartridge.text),
-                                    /*child: TextFormField(
-                                      controller: editStandardCartridge,
-                                      keyboardType: TextInputType.text,
-                                      validator: (String? value) {
-                                        if (value!.isEmpty) {
-                                          return '定号実包 空であってはなりません ';
-                                        }
-                                        return null;
-                                      },
-                                    ),*/
                                   ),
                                 ],
                               ),
@@ -225,20 +186,31 @@ class _ViewEditState extends State<ViewEdit> {
                           )),
                     ],
                   ),
+                ),SizedBox(height: 35),
+                Padding(
+                  padding: const EdgeInsets.only(right: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => DeleteGunScreen(
+                                  permissionNumber: widget.permissionNumber,
+                                  standardCartridge: widget.standardCartridge,
+                                  productAndName: widget.productAndName,
+                                  gunNumber: widget.gunNumber,
+                                  kinds: widget.kinds,
+                                  id: widget.id,
+                                )));
+                          },
+                          child: Image.asset('assets/images/Trash.png')),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 35),
                 GestureDetector(
                     onTap: () {
-                      /*if (formKey.currentState!.validate()) {
-                        AppCubit.get(context).updateData(
-                          id: id!,
-                          permissionNumber: editPermissionNumber.text,
-                          gunNumber: editGunNumber.text,
-                          kinds: editKinds.text,
-                          productAndName: editProductAndName.text,
-                          standardCartridge: editStandardCartridge.text,
-                        );
-                      }*/
                       Navigator.push(context,
                           MaterialPageRoute(builder: (_) => EditDataGun(
                             permissionNumber: widget.permissionNumber,

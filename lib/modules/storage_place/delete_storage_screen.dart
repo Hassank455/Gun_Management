@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:gun_management/modules/storage_place/delete_storage_screen.dart';
-import 'package:gun_management/modules/storage_place/edit_data_storage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gun_management/modules/storage_place/storage_place.dart';
+import 'package:gun_management/shared/cubit/cubit.dart';
+import 'package:gun_management/shared/cubit/states.dart';
 
-class ViewDataStorage extends StatefulWidget {
+class DeleteStorageScreen extends StatefulWidget {
   String? permissionNumber;
   String? kinds;
   int? id;
 
-  ViewDataStorage({this.permissionNumber, this.kinds, this.id});
-
+  DeleteStorageScreen({this.permissionNumber, this.kinds, this.id});
 
   @override
-  _ViewDataStorageState createState() => _ViewDataStorageState();
+  _DeleteStorageScreenState createState() => _DeleteStorageScreenState();
 }
 
-class _ViewDataStorageState extends State<ViewDataStorage>{
+class _DeleteStorageScreenState extends State<DeleteStorageScreen> {
 
   var editStorageName = TextEditingController();
   var editAddress = TextEditingController();
@@ -37,6 +38,16 @@ class _ViewDataStorageState extends State<ViewDataStorage>{
 
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<AppCubit, AppStates>(
+        listener: (context, state) {
+      if (state is AppDeleteDatabaseState) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => StoragePlace()),
+            ModalRoute.withName('/'));
+      }
+    },
+    builder: (context, state) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -109,42 +120,33 @@ class _ViewDataStorageState extends State<ViewDataStorage>{
                         )),
                   ],
                 ),
-              ),SizedBox(height: 35),
-              Padding(
-                padding: const EdgeInsets.only(right: 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => DeleteStorageScreen(
-                                permissionNumber: widget.permissionNumber,
-                                kinds: widget.kinds,
-                                id: widget.id,
-                              )));
-                        },
-                        child: Image.asset('assets/images/Trash.png')),
-                  ],
-                ),
               ),
               SizedBox(height: 20),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>EditDataStorage(
-                      id: widget.id,
-                      kinds: widget.kinds,
-                      permissionNumber: widget.permissionNumber,
-                    )));
-                    /*if (formKey.currentState!.validate()) {
-                      AppCubit.get(context).updateDataMap(
-                        id: widget.id!,
-                        storageName: editStorageName.text,
-                        address: editAddress.text,
-                      );
-                    }*/
+              Padding(
+                padding: const EdgeInsets.only(left: 20,right: 20),
+                child: GestureDetector(
+                  onTap: (){
+                    AppCubit.get(context).deleteDataMap(id: widget.id!);
                   },
-                  child: Image.asset('assets/images/image_edit.png')),
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        flex: 5,
+                        child: Container(
+                          height: 35,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[700],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(child: Text('削除します。',style: TextStyle(color: Colors.white),)),
+                        ),
+                      ),
+                      Expanded(
+                          flex: 1,child: Image.asset('assets/images/Trash.png')),
+                    ],
+                  ),
+                ),
+              ),
               Padding(
                   padding: EdgeInsets.only(
                       bottom: MediaQuery.of(context).viewInsets.bottom)),
@@ -152,6 +154,6 @@ class _ViewDataStorageState extends State<ViewDataStorage>{
           ),
         ),
       ),
-    );
+    );});
   }
 }
