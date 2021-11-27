@@ -4,6 +4,9 @@ import 'package:gun_management/modules/gun_list/delete_gun_screen.dart';
 import 'package:gun_management/modules/gun_list/edit_data_gun.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
+import 'package:gun_management/shared/style/color.dart';
+
+import 'gun_list.dart';
 
 class ViewEdit extends StatefulWidget {
   String? permissionNumber;
@@ -64,7 +67,15 @@ class _ViewEditState extends State<ViewEdit> {
     print(widget.permissionNumber);
     print(widget.id);
 
-    return Scaffold(
+    return BlocConsumer<AppCubit, AppStates>(listener: (context, state) {
+      if (state is AppDeleteDatabaseState) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => GunList()),
+            ModalRoute.withName('/'));
+      }
+    }, builder: (context, state) {
+      return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -87,7 +98,6 @@ class _ViewEditState extends State<ViewEdit> {
           height: 580,
           child: SingleChildScrollView(
             child: Column(
-
               children: [
                 SizedBox(height: 20),
                 Text(
@@ -186,7 +196,8 @@ class _ViewEditState extends State<ViewEdit> {
                           )),
                     ],
                   ),
-                ),SizedBox(height: 35),
+                ),
+                SizedBox(height: 35),
                 Padding(
                   padding: const EdgeInsets.only(right: 40),
                   child: Row(
@@ -194,7 +205,49 @@ class _ViewEditState extends State<ViewEdit> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(context,
+                            showDialog<void>(
+                              context: context,
+                              //  barrierDismissible: false, // user must tap button!
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  // title: const Text('警告の手紙'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: const <Widget>[
+                                        SizedBox(height: 10),
+                                        Text('消去してもよろしいですか？ '),
+                                        //Text('Would you like to approve of this message?'),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                primaryColor),
+                                      ),
+                                      child: const Text('はい',
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        AppCubit.get(context)
+                                            .deleteData(id: widget.id!);
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('キャンセル',
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                            /*Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => DeleteGunScreen(
                                   permissionNumber: widget.permissionNumber,
                                   standardCartridge: widget.standardCartridge,
@@ -202,7 +255,7 @@ class _ViewEditState extends State<ViewEdit> {
                                   gunNumber: widget.gunNumber,
                                   kinds: widget.kinds,
                                   id: widget.id,
-                                )));
+                                )));*/
                           },
                           child: Image.asset('assets/images/Trash.png')),
                     ],
@@ -211,15 +264,17 @@ class _ViewEditState extends State<ViewEdit> {
                 SizedBox(height: 35),
                 GestureDetector(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => EditDataGun(
-                            permissionNumber: widget.permissionNumber,
-                            standardCartridge: widget.standardCartridge,
-                            productAndName: widget.productAndName,
-                            gunNumber: widget.gunNumber,
-                            kinds: widget.kinds,
-                            id: widget.id,
-                          )));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => EditDataGun(
+                                    permissionNumber: widget.permissionNumber,
+                                    standardCartridge: widget.standardCartridge,
+                                    productAndName: widget.productAndName,
+                                    gunNumber: widget.gunNumber,
+                                    kinds: widget.kinds,
+                                    id: widget.id,
+                                  )));
                     },
                     child: Image.asset('assets/images/image_edit.png')),
                 Padding(
@@ -230,5 +285,6 @@ class _ViewEditState extends State<ViewEdit> {
           ),
         ),
       );
+    });
   }
 }

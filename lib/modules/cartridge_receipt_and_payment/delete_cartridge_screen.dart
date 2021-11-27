@@ -255,7 +255,46 @@ class _DeleteCartridgeScreenState extends State<DeleteCartridgeScreen> {
                   padding: const EdgeInsets.only(left: 20,right: 20),
                   child: GestureDetector(
                     onTap: (){
-                      AppCubit.get(context).deleteData2(id: widget.id!);
+                     // AppCubit.get(context).deleteData2(id: widget.id!);
+
+                      showDialog<void>(
+                        context: context,
+                        //  barrierDismissible: false, // user must tap button!
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                           // title: const Text('警告の手紙'),
+                            content: SingleChildScrollView(
+                              child: ListBody(
+                                children: const <Widget>[
+                                  SizedBox(height: 10),
+                                  Text('消去してもよろしいですか？ '),
+                                  //Text('Would you like to approve of this message?'),
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                  MaterialStateProperty.all<Color>(
+                                      primaryColor),
+                                ),
+                                child: const Text('はい',
+                                    style: TextStyle(color: Colors.white)),
+                                onPressed: () {
+                                  AppCubit.get(context).deleteData2(id: widget.id!);
+                                },
+                              ),
+                              TextButton(
+                                child: const Text('キャンセル',style: TextStyle(color: Colors.black)),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: Row(
                       //mainAxisAlignment: MainAxisAlignment.end,
@@ -534,9 +573,12 @@ class _DeleteCartridgeScreenState extends State<DeleteCartridgeScreen> {
                 flex: 2,
                 child: Container(
                   // width: 210,
-                    child: Text(
-                      '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
-                    )),
+                  child: TextFormField(
+                    // controller: number,
+                    // keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        hintText: '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）', border: InputBorder.none),
+                  ),),
               ),
             ],
           ),

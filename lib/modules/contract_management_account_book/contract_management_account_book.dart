@@ -14,7 +14,8 @@ class ContractManagementAccountBook extends StatelessWidget {
         listener: (context, state) {},
     builder: (context, state){
     var tasks = AppCubit.get(context).newTasks;
-    /*var tasks2 = AppCubit.get(context).informationTasks;*/
+    var tasks2 = AppCubit.get(context).archivedTasks;
+    var tasks3 = AppCubit.get(context).informationTasks;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -40,7 +41,7 @@ class ContractManagementAccountBook extends StatelessWidget {
             ),
           ),
           tasksBuilderScreen4(
-            tasks: tasks,
+            tasks: tasks
           ),
         ],
       ),

@@ -22,6 +22,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
   Color textColor3 = Colors.black;
 
   var number = TextEditingController();
+  var note = TextEditingController();
 
   /*String? storageName2;
   String? address2;
@@ -228,6 +229,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                         gunProduct: value2,
                         compatibleCartridge: compatibleCartridge[y],
                         price: number.text ,
+                        note: note.text ,
                       );
                     },
                     child: Image.asset('assets/images/image_true.png')),
@@ -462,10 +464,13 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
               Expanded(
                 flex: 2,
                 child: Container(
-                    // width: 210,
-                    child: Text(
-                  '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
-                )),
+                  // width: 210,
+                  child: TextFormField(
+                     controller: note,
+                    // keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        hintText: '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）', border: InputBorder.none),
+                  ),),
               ),
             ],
           ),

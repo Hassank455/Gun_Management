@@ -72,7 +72,7 @@ class AppCubit extends Cubit<AppStates> {
         // payment Table
         database
             .execute(
-            'CREATE TABLE payment (id INTEGER PRIMARY KEY, address1 TEXT, address2 TEXT, gunProduct TEXT, compatibleCartridge TEXT, price TEXT)')
+            'CREATE TABLE payment (id INTEGER PRIMARY KEY, address1 TEXT, address2 TEXT, gunProduct TEXT, compatibleCartridge TEXT, price TEXT, note TEXT)')
             .then((value) {
           print('table2 created');
         }).catchError((error) {
@@ -129,11 +129,12 @@ class AppCubit extends Cubit<AppStates> {
     String? gunProduct,
     String? compatibleCartridge,
     String? price,
+    String? note,
   }) async {
     await database!.transaction((txn)async {
       await txn
           .rawInsert(
-        'INSERT INTO payment(address1, address2, gunProduct, compatibleCartridge, price) VALUES("$address1", "$address2", "$gunProduct", "$compatibleCartridge", "$price")',
+        'INSERT INTO payment(address1, address2, gunProduct, compatibleCartridge, price, note) VALUES("$address1", "$address2", "$gunProduct", "$compatibleCartridge", "$price", "$note")',
       )
           .then((value) {
         print('$value inserted successfully');
@@ -312,12 +313,13 @@ class AppCubit extends Cubit<AppStates> {
     String? gunProduct,
     String? compatibleCartridge,
     String? price,
+    String? note,
     required int id,
   }) async
   {
     database!.rawUpdate(
-      'UPDATE payment SET address1 = ?, address2 = ?, gunProduct = ?, compatibleCartridge = ?, price = ? WHERE id = ?',
-      ['$address1', '$address2', '$gunProduct', '$compatibleCartridge', '$price', id],
+      'UPDATE payment SET address1 = ?, address2 = ?, gunProduct = ?, compatibleCartridge = ?, price = ?, note = ? WHERE id = ?',
+      ['$address1', '$address2', '$gunProduct', '$compatibleCartridge', '$price', '$note', id],
     ).then((value)
     {
       getDataFromDatabase(database);

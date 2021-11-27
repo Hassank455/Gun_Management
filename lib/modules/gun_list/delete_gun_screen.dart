@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gun_management/modules/gun_list/gun_list.dart';
 import 'package:gun_management/shared/cubit/cubit.dart';
 import 'package:gun_management/shared/cubit/states.dart';
+import 'package:gun_management/shared/style/color.dart';
 
 class DeleteGunScreen extends StatefulWidget {
   String? permissionNumber;
@@ -193,7 +194,47 @@ class _DeleteGunScreenState extends State<DeleteGunScreen> {
                 padding: const EdgeInsets.only(left: 20,right: 20),
                 child: GestureDetector(
                   onTap: (){
-                    AppCubit.get(context).deleteData(id: widget.id!);
+                   // AppCubit.get(context).deleteData(id: widget.id!);
+
+                    showDialog<void>(
+                      context: context,
+                      //  barrierDismissible: false, // user must tap button!
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                         // title: const Text('警告の手紙'),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: const <Widget>[
+                                SizedBox(height: 10),
+                                Text('消去してもよろしいですか？ '),
+                                //Text('Would you like to approve of this message?'),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                MaterialStateProperty.all<Color>(
+                                    primaryColor),
+                              ),
+                              child: const Text('はい',
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () {
+                                AppCubit.get(context).deleteData(id: widget.id!);
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('キャンセル',style: TextStyle(color: Colors.black)),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
                   },
                   child: Row(
                     //mainAxisAlignment: MainAxisAlignment.end,

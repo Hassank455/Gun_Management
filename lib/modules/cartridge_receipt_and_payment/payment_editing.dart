@@ -8,6 +8,8 @@ import 'package:gun_management/shared/cubit/states.dart';
 import 'package:gun_management/shared/style/color.dart';
 import 'package:intl/intl.dart';
 
+import 'cartridge_receipt_and_payment.dart';
+
 class PaymentEditing extends StatefulWidget {
   int? id;
   String? address1;
@@ -15,6 +17,7 @@ class PaymentEditing extends StatefulWidget {
   String? gunProduct;
   String? compatibleCartridge;
   String? price;
+  String? note;
 
 
   PaymentEditing({
@@ -24,6 +27,7 @@ class PaymentEditing extends StatefulWidget {
     this.gunProduct,
     this.compatibleCartridge,
     this.price,
+    this.note,
 
   });
 
@@ -42,6 +46,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
   Color textColor3 = Colors.black;
 
   TextEditingController number = TextEditingController();
+  TextEditingController note = TextEditingController();
 
   /*String? storageName2;
   String? address2;
@@ -84,6 +89,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
     }
 
     number.text = widget.price.toString();
+    note.text = widget.note.toString();
 
     if(gunProductName.isNotEmpty){
       //value2 = widget.gunProduct;
@@ -104,6 +110,12 @@ class _PaymentEditingState extends State<PaymentEditing> {
     return BlocConsumer<AppCubit, AppStates>(listener: (context, state) {
       if (state is AppUpdateDatabaseState) {
         Navigator.pop(context);
+      }
+      if (state is AppDeleteDatabaseState) {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => CartridgeReceiptAndPayment()),
+            ModalRoute.withName('/'));
       }
     }, builder: (context, state) {
       return Scaffold(
@@ -254,7 +266,45 @@ class _PaymentEditingState extends State<PaymentEditing> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            Navigator.push(context,
+                            showDialog<void>(
+                              context: context,
+                              //  barrierDismissible: false, // user must tap button!
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  // title: const Text('警告の手紙'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: const <Widget>[
+                                        SizedBox(height: 10),
+                                        Text('消去してもよろしいですか？ '),
+                                        //Text('Would you like to approve of this message?'),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            primaryColor),
+                                      ),
+                                      child: const Text('はい',
+                                          style: TextStyle(color: Colors.white)),
+                                      onPressed: () {
+                                        AppCubit.get(context).deleteData2(id: widget.id!);
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: const Text('キャンセル',style: TextStyle(color: Colors.black)),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          /*  Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => DeleteCartridgeScreen(
                                   address1: widget.address1,
                                   address2: widget.address2,
@@ -262,7 +312,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                                   compatibleCartridge: widget.compatibleCartridge,
                                   price: widget.price,
                                   id: widget.id,
-                                )));
+                                )));*/
                           },
                           child: Image.asset('assets/images/Trash.png')),
                     ],
@@ -278,6 +328,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                         gunProduct: value2,
                         compatibleCartridge: compatibleCartridge[y],
                         price: number.text ,
+                        note: note.text ,
                       );
                     },
                     child: Image.asset('assets/images/image_edit.png')),
@@ -534,13 +585,25 @@ class _PaymentEditingState extends State<PaymentEditing> {
             children: [
               Expanded(flex: 1, child: Text('備考')),
               // SizedBox(width: 70),
-              Expanded(
+              /*Expanded(
                 flex: 2,
                 child: Container(
                   // width: 210,
                     child: Text(
                       '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
                     )),
+              ),*/
+
+              Expanded(
+                flex: 2,
+                child: Container(
+                  // width: 210,
+                    child: TextFormField(
+                      controller: note,
+                     // keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          hintText: '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）', border: InputBorder.none),
+                    ),),
               ),
             ],
           ),

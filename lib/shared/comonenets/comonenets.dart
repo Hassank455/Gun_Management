@@ -111,13 +111,13 @@ Widget tasksBuilder({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                /*Icon(
                   Icons.menu,
                   size: 100.0,
                   color: Colors.grey,
-                ),
+                ),*/
                 Text(
-                  'No Note Yet, Please Add Some Note',
+                  'データがありません。',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -228,13 +228,13 @@ Widget tasksBuilderMap({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                /*Icon(
                   Icons.menu,
                   size: 100.0,
                   color: Colors.grey,
-                ),
+                ),*/
                 Text(
-                  'No Note Yet, Please Add Some Note',
+                  'データがありません。',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -368,13 +368,13 @@ Widget tasksBuilderInformation({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                /*Icon(
                   Icons.menu,
                   size: 100.0,
                   color: Colors.grey,
-                ),
+                ),*/
                 Text(
-                  'No Note Yet, Please Add Some Note',
+                  'データがありません。',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -397,13 +397,13 @@ Widget buildTaskItemScreen4(Map model, context) => GestureDetector(
                       gunNumber: model['gunNumber'],
                       productAndName: model['productAndName'],
                       standardCartridge: model['standardCartridge'],
-                      address: model['address'],
-                      title: model['title'],
-                      addressUser: model['addressUser'],
-                      fullName: model['fullName'],
-                      storageName: model['storageName'],
-                      telephoneNumber: model['telephoneNumber'],
-                      user: model['user'],
+                     /* address: model2['address'],
+                      title: model3['title'],
+                      addressUser: model3['addressUser'],
+                      fullName: model3['fullName'],
+                      storageName: model2['storageName'],
+                      telephoneNumber: model3['telephoneNumber'],
+                      user: model3['user'],*/
                     )));
       },
       child: Dismissible(
@@ -504,9 +504,10 @@ Widget buildTaskItemScreen4(Map model, context) => GestureDetector(
     );
 
 Widget tasksBuilderScreen4({
-  required List<Map> tasks,
+  required List<Map>? tasks,
+
 }) =>
-    (tasks.length > 0)
+    (tasks!.length > 0)
         ? Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
@@ -529,13 +530,13 @@ Widget tasksBuilderScreen4({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                /*Icon(
                   Icons.menu,
                   size: 100.0,
                   color: Colors.grey,
-                ),
+                ),*/
                 Text(
-                  'No Note Yet, Please Add Some Note',
+                  'データがありません。',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
@@ -558,6 +559,7 @@ Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
                   gunProduct: model?['gunProduct'] ?? 'null',
                   compatibleCartridge: model?['compatibleCartridge'] ?? 'null',
                   price: model?['price'] ?? 'null',
+                  note: model?['note'] ?? 'null',
                     )));
       },
       child: Dismissible(
@@ -594,7 +596,7 @@ Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
                     ),SizedBox(height: 7),
                     Text('保管場所：${model['address2']}'),
                     SizedBox(height: 7),
-                    Text('備考：米国 個人消費支出（ＰＣＥコア・デフレーター\,四半期雇用コスト指数）'),
+                    Text('備考：${model['note']}'),
                   ],
                 ),
               ),
@@ -655,13 +657,13 @@ Widget tasksBuilderCartidge({
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                /*Icon(
                   Icons.menu,
                   size: 100.0,
                   color: Colors.grey,
-                ),
+                ),*/
                 Text(
-                  'No Note Yet, Please Add Some Note',
+                  'データがありません。',
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,

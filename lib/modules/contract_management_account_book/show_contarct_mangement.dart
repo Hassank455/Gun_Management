@@ -13,15 +13,14 @@ class ShowContractManagement extends StatefulWidget {
   String? kinds;
   String? standardCartridge;
 
-  String? storageName;
+  /*String? storageName;
   String? address;
 
   String? user;
   String? fullName;
   String? title;
   String? telephoneNumber;
-  String? addressUser;
-
+  String? addressUser;*/
 
   ShowContractManagement({
     this.permissionNumber,
@@ -30,13 +29,13 @@ class ShowContractManagement extends StatefulWidget {
     this.id,
     this.kinds,
     this.standardCartridge,
-    this.storageName,
+    /*   this.storageName,
     this.address,
     this.user,
     this.title,
     this.addressUser,
     this.fullName,
-    this.telephoneNumber,
+    this.telephoneNumber,*/
   });
 
   @override
@@ -51,106 +50,169 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
   Color textColor = Colors.black;
   Color textColor2 = Colors.black;
   Color textColor3 = Colors.black;
+
+  List? item = [];
+  List? itemAddress = [];
+  List? itemFullName = [];
+  List? itemAddressUser = [];
+  List? itemTelephoneNumber = [];
+
+  @override
+  void initState() {
+    var tasks = AppCubit.get(context).informationTasks;
+    var tasksMap = AppCubit.get(context).archivedTasks;
+    tasksMap.forEach((element) {
+      if (tasksMap.isNotEmpty) {
+        item?.add(element['storageName'] ?? 'null');
+      }
+    });
+    tasksMap.forEach((element) {
+      if (tasksMap.isNotEmpty) {
+        itemAddress?.add(element['address'] ?? 'null');
+      }
+    });
+
+    tasks.forEach((element) {
+      if (tasks.isNotEmpty) {
+        itemFullName?.add(element['fullName'] ?? 'null');
+      }
+    });
+
+    tasks.forEach((element) {
+      if (tasks.isNotEmpty) {
+        itemAddressUser?.add(element['addressUser'] ?? 'null');
+      }
+    });
+
+    tasks.forEach((element) {
+      if (tasks.isNotEmpty) {
+        itemTelephoneNumber?.add(element['telephoneNumber'] ?? 'null');
+      }
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.id);
     print(widget.permissionNumber);
-    print(widget.storageName);
-    print(widget.title);
+    print(item);
+    print(itemAddress);
+    print(itemFullName);
+    print(itemAddressUser);
+
+    //  print(widget.storageName);
+    //  print(widget.title);
     print('#############');
 
     return BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          /*var tasks = AppCubit.get(context).newTasks;
-          var tasks2 = AppCubit.get(context).doneTasks;*/
+          var tasks = AppCubit.get(context).informationTasks;
+          var tasksMap = AppCubit.get(context).archivedTasks;
+
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
               centerTitle: true,
-              title: Text('${widget.standardCartridge ?? ''} 番', style: TextStyle(color: Colors.black)),
+              title: Text('${widget.standardCartridge ?? ''} 番',
+                  style: TextStyle(color: Colors.black)),
               leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
                   },
                   icon: Icon(Icons.arrow_back_ios, color: Colors.black)),
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, right: 30, top: 40),
-                    child: Row(
+            body: (tasksMap.isNotEmpty && tasks.isNotEmpty)
+                ? SingleChildScrollView(
+                    child: Column(
                       children: [
-                        Text('期間：'),
-                        SizedBox(width: 5),
-                        Text('${DateFormat("yyyy/MM/dd").format(DateTime.now())}'),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 30, right: 30, top: 40),
+                          child: Row(
+                            children: [
+                              Text('期間：'),
+                              SizedBox(width: 5),
+                              Text(
+                                  '${DateFormat("yyyy/MM/dd").format(DateTime.now())}'),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: Divider(
+                            color: Colors.grey[400],
+                            thickness: 2,
+                            height: 50,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 30,
+                            right: 30,
+                          ),
+                          child: Row(
+                            children: [
+                              Text('住所：'),
+                              SizedBox(width: 5),
+                              (itemAddressUser != null)
+                                  ? Text(itemAddressUser?[0] ?? 'null')
+                                  : Container(),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 30, right: 30, top: 15),
+                          child: Row(
+                            children: [
+                              Text('氏名：'),
+                              SizedBox(width: 5),
+                              (itemFullName != null)
+                                  ? Text(itemFullName?[0] ?? 'null')
+                                  : Container(),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 30, right: 30, top: 15),
+                          child: Row(
+                            children: [
+                              Text('電話番号：'),
+                              SizedBox(width: 5),
+                              (itemTelephoneNumber != null)
+                                  ? Text(itemTelephoneNumber?[0] ?? 'null')
+                                  : Container(),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30, right: 30),
+                          child: Divider(
+                            color: Colors.grey[400],
+                            thickness: 2,
+                            height: 50,
+                          ),
+                        ),
+                        widget1(),
+                        SizedBox(height: 20),
+                        widget3(),
+                        SizedBox(height: 20),
+                        widget3(),
+                        SizedBox(height: 20),
+                        widget4(),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
-                    child: Divider(
-                      color: Colors.grey[400],
-                      thickness: 2,
-                      height: 50,
+                  )
+                : Container(
+                    child: Center(
+                      child: Text('ストレージと情報データを入力します '),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 30,
-                      right: 30,
-                    ),
-                    child: Row(
-                      children: [
-                        Text('住所：'),
-                        SizedBox(width: 5),
-                        Text(widget.addressUser ?? ''),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, right: 30, top: 15),
-                    child: Row(
-                      children: [
-                        Text('氏名：'),
-                        SizedBox(width: 5),
-                        Text(widget.fullName ?? ''),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 30, right: 30, top: 15),
-                    child: Row(
-                      children: [
-                        Text('電話番号：'),
-                        SizedBox(width: 5),
-                        Text(widget.telephoneNumber ?? ''),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30),
-                    child: Divider(
-                      color: Colors.grey[400],
-                      thickness: 2,
-                      height: 50,
-                    ),
-                  ),
-                  widget1(),
-                  SizedBox(height: 20),
-                  widget3(),
-                  SizedBox(height: 20),
-                  widget3(),
-                  SizedBox(height: 20),
-                  widget4(),
-                ],
-              ),
-            ),
           );
         });
   }
@@ -258,9 +320,13 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(widget.fullName ?? ''),
+                  (itemFullName != null)
+                      ? Text(itemFullName?[0] ?? 'null')
+                      : Container(),
                   SizedBox(width: 10),
-                  Text(widget.addressUser ?? ''),
+                  (itemAddressUser != null)
+                      ? Text(itemAddressUser?[0] ?? 'null')
+                      : Container(),
                 ],
               ),
             ),
@@ -280,22 +346,28 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.storageName ?? ''),
+                      (item != null) ? Text(item?[0] ?? 'null') : Container(),
                       SizedBox(height: 15),
-                      Text(widget.storageName ?? ''),
+                      (item != null) ? Text(item?[0] ?? 'null') : Container(),
                       SizedBox(height: 15),
-                      Text(widget.storageName ?? ''),
+                      (item != null) ? Text(item?[0] ?? 'null') : Container(),
                     ],
                   ),
                   SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.address ?? ''),
+                      (itemAddress != null)
+                          ? Text(itemAddress?[0] ?? 'null')
+                          : Container(),
                       SizedBox(height: 15),
-                      Text(widget.address ?? ''),
+                      (itemAddress != null)
+                          ? Text(itemAddress?[0] ?? 'null')
+                          : Container(),
                       SizedBox(height: 15),
-                      Text(widget.address ?? ''),
+                      (itemAddress != null)
+                          ? Text(itemAddress?[0] ?? 'null')
+                          : Container(),
                     ],
                   ),
                 ],
@@ -356,22 +428,22 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(12),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(12),
                                       bottomLeft: Radius.circular(12)),
                                   color:
-                                  (isClicked = true) ? color : Colors.white,
+                                      (isClicked = true) ? color : Colors.white,
                                   border: Border.all(color: Colors.blue)),
                               width: 80,
-
                               child: Center(
                                   child: Text(
-                                    '許可',
-                                    style: TextStyle(
-                                      color: (isClicked = true)
-                                          ? textColor
-                                          : Colors.black,
-                                    ),
-                                  )))),
+                                '許可',
+                                style: TextStyle(
+                                  color: (isClicked = true)
+                                      ? textColor
+                                      : Colors.black,
+                                ),
+                              )))),
                       GestureDetector(
                         onTap: () {
                           setState(() {
@@ -387,10 +459,9 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                         child: Container(
                             decoration: BoxDecoration(
                                 color:
-                                (isClicked = true) ? color2 : Colors.white,
+                                    (isClicked = true) ? color2 : Colors.white,
                                 border: Border.all(color: Colors.blue)),
                             width: 80,
-
                             child: Center(
                               child: Text(
                                 '無許可',
@@ -416,22 +487,22 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(topRight: Radius.circular(12),
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(12),
                                       bottomRight: Radius.circular(12)),
                                   color: (isClicked = true)
                                       ? color3
                                       : Colors.white,
                                   border: Border.all(color: Colors.blue)),
                               width: 75,
-
                               child: Center(
                                   child: Text(
-                                    '有害駆除',
-                                    style: TextStyle(
-                                        color: (isClicked = true)
-                                            ? textColor3
-                                            : Colors.black),
-                                  )))),
+                                '有害駆除',
+                                style: TextStyle(
+                                    color: (isClicked = true)
+                                        ? textColor3
+                                        : Colors.black),
+                              )))),
                     ],
                   ),
                 ),
@@ -529,7 +600,7 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                 },
                 children: [
                   TableRow(children: [
-                  WidgetTable1(),
+                    WidgetTable1(),
                     Container(
                       height: 150,
                       width: 150,
@@ -637,9 +708,11 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
             SizedBox(height: 10),
             Text('許可'),
             SizedBox(height: 10),
-            Text(widget.storageName ?? ''),
+            (item != null) ? Text(item?[0] ?? 'null') : Container(),
             SizedBox(height: 10),
-            Text(widget.address ?? ''),
+            (itemAddress != null)
+                ? Text(itemAddress?[0] ?? 'null')
+                : Container(),
           ],
         ),
       ),
