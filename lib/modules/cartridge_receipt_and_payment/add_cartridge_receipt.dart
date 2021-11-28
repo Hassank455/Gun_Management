@@ -21,7 +21,12 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
   Color textColor2 = Colors.black;
   Color textColor3 = Colors.black;
 
+  String permission = '';
+
   var number = TextEditingController();
+  var number2 = TextEditingController();
+  var number3 = TextEditingController();
+  var number4 = TextEditingController();
   var note = TextEditingController();
 
   /*String? storageName2;
@@ -58,11 +63,11 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
       compatibleCartridge.add(element['standardCartridge'] ?? 'null');
     });
 
-    if(item.isNotEmpty){
+    if (item.isNotEmpty) {
       value1 = item[0];
     }
 
-    if(gunProductName.isNotEmpty){
+    if (gunProductName.isNotEmpty) {
       value2 = gunProductName[0];
     }
 
@@ -71,8 +76,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
 
   @override
   Widget build(BuildContext context) {
-    /* print(gunProductName);
-    print(compatibleCartridge);*/
+    print(permission);
 
     return BlocConsumer<AppCubit, AppStates>(listener: (context, state) {
       if (state is AppInsertDatabaseState) {
@@ -135,29 +139,31 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                       ),
                       widget6(
                         '場所',
-                        (item.isNotEmpty) ?
-                        DropdownButton<String?>(
-                          iconEnabledColor: Colors.white,
-                          value: value1,
-                          dropdownColor: Colors.grey[600],
-                          onChanged: (value) {
-                            setState(() {
-                              this.value1 = value ?? '';
-                              print(value1);
-                              x = item.indexOf(value);
-                              print(itemAddress[x]);
-                            });
-                          },
-                          items: item.map<DropdownMenuItem<String?>>((value) {
-                            return DropdownMenuItem(
-                              child: Text(
-                                value ?? 'null',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              value: value,
-                            );
-                          }).toList(),
-                        ) : Container(),
+                        (item.isNotEmpty)
+                            ? DropdownButton<String?>(
+                                iconEnabledColor: Colors.white,
+                                value: value1,
+                                dropdownColor: Colors.grey[600],
+                                onChanged: (value) {
+                                  setState(() {
+                                    this.value1 = value ?? '';
+                                    print(value1);
+                                    x = item.indexOf(value);
+                                    print(itemAddress[x]);
+                                  });
+                                },
+                                items: item
+                                    .map<DropdownMenuItem<String?>>((value) {
+                                  return DropdownMenuItem(
+                                    child: Text(
+                                      value ?? 'null',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    value: value,
+                                  );
+                                }).toList(),
+                              )
+                            : Container(),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10, right: 10),
@@ -171,7 +177,9 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                         '所在地',
                         Text(
                           //  widget.address ?? '',
-                          (itemAddress.isNotEmpty) ? itemAddress[x] ?? 'null' : 'null',
+                          (itemAddress.isNotEmpty)
+                              ? itemAddress[x] ?? 'null'
+                              : 'null',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -213,10 +221,10 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                   height: 400,
                   child: TabBarView(
                     children: [
-                      widget7(),
-                      widget7(visable: false),
-                      widget7(),
-                      widget7(),
+                      widget7(controller: number),
+                      widget7(visable: false, controller: number2),
+                      widget7(controller: number3),
+                      widget7(controller: number4),
                     ],
                   ),
                 ),
@@ -228,8 +236,12 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                         address2: itemAddress[x],
                         gunProduct: value2,
                         compatibleCartridge: compatibleCartridge[y],
-                        price: number.text ,
-                        note: note.text ,
+                        price: number.text,
+                        price2: number2.text,
+                        price3: number3.text,
+                        price4: number4.text,
+                        note: note.text,
+                        permission: permission,
                       );
                     },
                     child: Image.asset('assets/images/image_true.png')),
@@ -264,7 +276,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
     );
   }
 
-  Widget widget7({bool? visable = true}) {
+  Widget widget7({bool? visable = true, TextEditingController? controller}) {
     return Padding(
       padding: const EdgeInsets.only(left: 42, top: 20, right: 20),
       child: Column(
@@ -277,27 +289,29 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                     // SizedBox(width: 70),
                     Expanded(
                       flex: 2,
-                      child: (gunProductName.isNotEmpty) ? DropdownButton<String?>(
-                        iconEnabledColor: Colors.black,
-                        value: value2 ?? '',
-                        dropdownColor: Colors.white,
-                        onChanged: (value) {
-                          setState(() {
-                            this.value2 = value ?? '';
-                            y = gunProductName.indexOf(value);
-                          });
-                        },
-                        items: gunProductName
-                            .map<DropdownMenuItem<String?>>((value) {
-                          return DropdownMenuItem(
-                            child: Text(
-                              value ?? '',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            value: value,
-                          );
-                        }).toList(),
-                      ) : Container(),
+                      child: (gunProductName.isNotEmpty)
+                          ? DropdownButton<String?>(
+                              iconEnabledColor: Colors.black,
+                              value: value2 ?? '',
+                              dropdownColor: Colors.white,
+                              onChanged: (value) {
+                                setState(() {
+                                  this.value2 = value ?? '';
+                                  y = gunProductName.indexOf(value);
+                                });
+                              },
+                              items: gunProductName
+                                  .map<DropdownMenuItem<String?>>((value) {
+                                return DropdownMenuItem(
+                                  child: Text(
+                                    value ?? '',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  value: value,
+                                );
+                              }).toList(),
+                            )
+                          : Container(),
                     ),
                   ],
                 )
@@ -310,8 +324,11 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
             children: [
               Expanded(flex: 1, child: Text('実包')),
               //SizedBox(width: 70),
-              Expanded(flex: 2, child: Text(
-                  (compatibleCartridge.isNotEmpty) ? compatibleCartridge[y] ?? 'null' : 'null')),
+              Expanded(
+                  flex: 2,
+                  child: Text((compatibleCartridge.isNotEmpty)
+                      ? compatibleCartridge[y] ?? 'null'
+                      : 'null')),
             ],
           ),
           Divider(color: Colors.grey[400], thickness: 2, height: 30),
@@ -342,6 +359,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                                 textColor = Colors.white;
                                 textColor2 = Colors.black;
                                 textColor3 = Colors.black;
+                                permission = '許可';
                               });
                             },
                             child: Container(
@@ -376,6 +394,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                               textColor = Colors.black;
                               textColor2 = Colors.white;
                               textColor3 = Colors.black;
+                              permission = '無許可';
                             });
                           },
                           child: Container(
@@ -409,6 +428,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                                 textColor = Colors.black;
                                 textColor2 = Colors.black;
                                 textColor3 = Colors.white;
+                                permission = '有害駆除';
                               });
                             },
                             child: Container(
@@ -446,7 +466,7 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                 flex: 2,
                 child: Container(
                   child: TextFormField(
-                    controller: number,
+                    controller: controller,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         hintText: '0', border: InputBorder.none),
@@ -466,11 +486,13 @@ class _AddCartridgeReceiptState extends State<AddCartridgeReceipt> {
                 child: Container(
                   // width: 210,
                   child: TextFormField(
-                     controller: note,
+                    controller: note,
                     // keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                        hintText: '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）', border: InputBorder.none),
-                  ),),
+                        hintText: '米国 個人消費支出（ＰＣＥコア・デフレーター, 四半期雇用コスト指数）',
+                        border: InputBorder.none),
+                  ),
+                ),
               ),
             ],
           ),

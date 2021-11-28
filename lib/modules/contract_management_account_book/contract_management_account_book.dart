@@ -16,6 +16,7 @@ class ContractManagementAccountBook extends StatelessWidget {
     var tasks = AppCubit.get(context).newTasks;
     var tasks2 = AppCubit.get(context).archivedTasks;
     var tasks3 = AppCubit.get(context).informationTasks;
+    var tasks4 = AppCubit.get(context).doneTasks;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -40,9 +41,12 @@ class ContractManagementAccountBook extends StatelessWidget {
               ],
             ),
           ),
-          tasksBuilderScreen4(
-            tasks: tasks
-          ),
+          /*(tasks!.length > 0 && tasks.length == tasks2!.length && tasks.length == tasks3!.length) ?*/ tasksBuilderScreen4(
+            tasks: tasks,
+            tasks2: tasks2,
+            tasks3: tasks3,
+            tasks4: tasks4,
+          ) /*: Container()*/,
         ],
       ),
     );});

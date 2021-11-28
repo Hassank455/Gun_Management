@@ -90,7 +90,7 @@ class AddDataStorage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('許可番号'),
+                                  Text('保管庫名称'),
                                   Container(
                                     width: 200,
                                     child: TextFormField(
@@ -112,7 +112,7 @@ class AddDataStorage extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text('種類'),
+                                  Text('住所'),
                                   Container(
                                     width: 200,
                                     child: TextFormField(

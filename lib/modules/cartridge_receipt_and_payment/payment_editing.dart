@@ -17,7 +17,11 @@ class PaymentEditing extends StatefulWidget {
   String? gunProduct;
   String? compatibleCartridge;
   String? price;
+  String? price2;
+  String? price3;
+  String? price4;
   String? note;
+  String? permission;
 
 
   PaymentEditing({
@@ -27,7 +31,11 @@ class PaymentEditing extends StatefulWidget {
     this.gunProduct,
     this.compatibleCartridge,
     this.price,
+    this.price2,
+    this.price3,
+    this.price4,
     this.note,
+    this.permission,
 
   });
 
@@ -45,7 +53,12 @@ class _PaymentEditingState extends State<PaymentEditing> {
   Color textColor2 = Colors.black;
   Color textColor3 = Colors.black;
 
+
+
   TextEditingController number = TextEditingController();
+  TextEditingController number2 = TextEditingController();
+  TextEditingController number3 = TextEditingController();
+  TextEditingController number4 = TextEditingController();
   TextEditingController note = TextEditingController();
 
   /*String? storageName2;
@@ -65,9 +78,15 @@ class _PaymentEditingState extends State<PaymentEditing> {
 
   int x = 0;
   int y = 0;
-
+  late String permission;
   @override
   void initState() {
+    permission = widget.permission!;
+    /*setState(() {
+      if(permission == '許可'){
+        isClicked = !isClicked;
+      }
+    });*/
     var tasks = AppCubit.get(context).newTasks;
     var tasksMap = AppCubit.get(context).archivedTasks;
     tasksMap.forEach((element) {
@@ -89,6 +108,9 @@ class _PaymentEditingState extends State<PaymentEditing> {
     }
 
     number.text = widget.price.toString();
+    number2.text = widget.price2.toString();
+    number3.text = widget.price3.toString();
+    number4.text = widget.price4.toString();
     note.text = widget.note.toString();
 
     if(gunProductName.isNotEmpty){
@@ -104,8 +126,8 @@ class _PaymentEditingState extends State<PaymentEditing> {
 
   @override
   Widget build(BuildContext context) {
-    /* print(gunProductName);
-    print(compatibleCartridge);*/
+     print(permission);
+   // print(compatibleCartridge);
 
     return BlocConsumer<AppCubit, AppStates>(listener: (context, state) {
       if (state is AppUpdateDatabaseState) {
@@ -252,10 +274,10 @@ class _PaymentEditingState extends State<PaymentEditing> {
                   height: 400,
                   child: TabBarView(
                     children: [
-                      widget7(),
-                      widget7(visable: false,visable2: false),
-                      widget7(),
-                      widget7(),
+                      widget7(controller: number),
+                      widget7(visable: false,visable2: false,controller: number2),
+                      widget7(controller: number3),
+                      widget7(controller: number4),
                     ],
                   ),
                 ),
@@ -328,7 +350,11 @@ class _PaymentEditingState extends State<PaymentEditing> {
                         gunProduct: value2,
                         compatibleCartridge: compatibleCartridge[y],
                         price: number.text ,
+                        price2: number2.text ,
+                        price3: number3.text ,
+                        price4: number4.text ,
                         note: note.text ,
+                        permission: permission,
                       );
                     },
                     child: Image.asset('assets/images/image_edit.png')),
@@ -363,7 +389,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
     );
   }
 
-  Widget widget7({bool? visable = true,bool? visable2 = true}) {
+  Widget widget7({bool? visable = true,bool? visable2 = true, TextEditingController? controller}) {
     return Padding(
       padding: const EdgeInsets.only(left: 42, top: 20, right: 20),
       child: Column(
@@ -466,6 +492,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                                 textColor = Colors.white;
                                 textColor2 = Colors.black;
                                 textColor3 = Colors.black;
+                                permission = '許可';
                               });
                             },
                             child: Container(
@@ -500,6 +527,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                               textColor = Colors.black;
                               textColor2 = Colors.white;
                               textColor3 = Colors.black;
+                              permission = '無許可';
                             });
                           },
                           child: Container(
@@ -533,6 +561,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                                 textColor = Colors.black;
                                 textColor2 = Colors.black;
                                 textColor3 = Colors.white;
+                                permission = '有害駆除';
                               });
                             },
                             child: Container(
@@ -570,7 +599,7 @@ class _PaymentEditingState extends State<PaymentEditing> {
                 flex: 2,
                 child: Container(
                   child: TextFormField(
-                    controller: number,
+                    controller: controller,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                         hintText: '0', border: InputBorder.none),

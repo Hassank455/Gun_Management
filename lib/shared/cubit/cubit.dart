@@ -72,7 +72,7 @@ class AppCubit extends Cubit<AppStates> {
         // payment Table
         database
             .execute(
-            'CREATE TABLE payment (id INTEGER PRIMARY KEY, address1 TEXT, address2 TEXT, gunProduct TEXT, compatibleCartridge TEXT, price TEXT, note TEXT)')
+            'CREATE TABLE payment (id INTEGER PRIMARY KEY, address1 TEXT, address2 TEXT, gunProduct TEXT, compatibleCartridge TEXT, price TEXT, price2 TEXT, price3 TEXT, price4 TEXT, note TEXT, permission TEXT)')
             .then((value) {
           print('table2 created');
         }).catchError((error) {
@@ -129,12 +129,16 @@ class AppCubit extends Cubit<AppStates> {
     String? gunProduct,
     String? compatibleCartridge,
     String? price,
+    String? price2,
+    String? price3,
+    String? price4,
     String? note,
+    String? permission,
   }) async {
     await database!.transaction((txn)async {
       await txn
           .rawInsert(
-        'INSERT INTO payment(address1, address2, gunProduct, compatibleCartridge, price, note) VALUES("$address1", "$address2", "$gunProduct", "$compatibleCartridge", "$price", "$note")',
+        'INSERT INTO payment(address1, address2, gunProduct, compatibleCartridge, price, price2, price3, price4, note, permission) VALUES("$address1", "$address2", "$gunProduct", "$compatibleCartridge", "$price", "$permission", "$price3", "$price4", "$note", "$permission")',
       )
           .then((value) {
         print('$value inserted successfully');
@@ -313,13 +317,17 @@ class AppCubit extends Cubit<AppStates> {
     String? gunProduct,
     String? compatibleCartridge,
     String? price,
+    String? price2,
+    String? price3,
+    String? price4,
     String? note,
+    String? permission,
     required int id,
   }) async
   {
     database!.rawUpdate(
-      'UPDATE payment SET address1 = ?, address2 = ?, gunProduct = ?, compatibleCartridge = ?, price = ?, note = ? WHERE id = ?',
-      ['$address1', '$address2', '$gunProduct', '$compatibleCartridge', '$price', '$note', id],
+      'UPDATE payment SET address1 = ?, address2 = ?, gunProduct = ?, compatibleCartridge = ?, price = ?, price2 = ?, price3 = ?, price4 = ?, note = ?, permission = ? WHERE id = ?',
+      ['$address1', '$address2', '$gunProduct', '$compatibleCartridge', '$price', '$price2', '$price3', '$price4', '$note', '$permission', id],
     ).then((value)
     {
       getDataFromDatabase(database);

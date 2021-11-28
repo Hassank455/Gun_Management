@@ -13,14 +13,17 @@ class ShowContractManagement extends StatefulWidget {
   String? kinds;
   String? standardCartridge;
 
-  /*String? storageName;
+  String? storageName;
   String? address;
 
   String? user;
   String? fullName;
   String? title;
   String? telephoneNumber;
-  String? addressUser;*/
+  String? addressUser;
+
+
+
 
   ShowContractManagement({
     this.permissionNumber,
@@ -29,13 +32,13 @@ class ShowContractManagement extends StatefulWidget {
     this.id,
     this.kinds,
     this.standardCartridge,
-    /*   this.storageName,
+    this.storageName,
     this.address,
     this.user,
     this.title,
     this.addressUser,
     this.fullName,
-    this.telephoneNumber,*/
+    this.telephoneNumber,
   });
 
   @override
@@ -51,7 +54,7 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
   Color textColor2 = Colors.black;
   Color textColor3 = Colors.black;
 
-  List? item = [];
+ /* List? item = [];
   List? itemAddress = [];
   List? itemFullName = [];
   List? itemAddressUser = [];
@@ -91,19 +94,13 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
     });
 
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     print(widget.id);
     print(widget.permissionNumber);
-    print(item);
-    print(itemAddress);
-    print(itemFullName);
-    print(itemAddressUser);
 
-    //  print(widget.storageName);
-    //  print(widget.title);
     print('#############');
 
     return BlocConsumer<AppCubit, AppStates>(
@@ -130,14 +127,13 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, right: 30, top: 40),
+                          padding:
+                          const EdgeInsets.only(left: 30, right: 30, top: 40),
                           child: Row(
                             children: [
                               Text('期間：'),
                               SizedBox(width: 5),
-                              Text(
-                                  '${DateFormat("yyyy/MM/dd").format(DateTime.now())}'),
+                              Text('${DateFormat("yyyy/MM/dd").format(DateTime.now())}'),
                             ],
                           ),
                         ),
@@ -158,35 +154,29 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                             children: [
                               Text('住所：'),
                               SizedBox(width: 5),
-                              (itemAddressUser != null)
-                                  ? Text(itemAddressUser?[0] ?? 'null')
-                                  : Container(),
+                              Text(widget.addressUser ?? ''),
                             ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, right: 30, top: 15),
+                          padding:
+                          const EdgeInsets.only(left: 30, right: 30, top: 15),
                           child: Row(
                             children: [
                               Text('氏名：'),
                               SizedBox(width: 5),
-                              (itemFullName != null)
-                                  ? Text(itemFullName?[0] ?? 'null')
-                                  : Container(),
+                              Text(widget.fullName ?? ''),
                             ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, right: 30, top: 15),
+                          padding:
+                          const EdgeInsets.only(left: 30, right: 30, top: 15),
                           child: Row(
                             children: [
                               Text('電話番号：'),
                               SizedBox(width: 5),
-                              (itemTelephoneNumber != null)
-                                  ? Text(itemTelephoneNumber?[0] ?? 'null')
-                                  : Container(),
+                              Text(widget.telephoneNumber ?? ''),
                             ],
                           ),
                         ),
@@ -200,9 +190,9 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                         ),
                         widget1(),
                         SizedBox(height: 20),
-                        widget3(),
+                        widget3('受先一覧'),
                         SizedBox(height: 20),
-                        widget3(),
+                        widget3('払先一覧'),
                         SizedBox(height: 20),
                         widget4(),
                       ],
@@ -293,7 +283,7 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
     );
   }
 
-  Widget widget3() {
+  Widget widget3(String text) {
     return Padding(
       padding: const EdgeInsets.all(18.0),
       child: Container(
@@ -306,7 +296,7 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(height: 10),
-            Text('受先一覧'),
+            Text(text),
             Padding(
               padding: const EdgeInsets.only(right: 15, left: 15),
               child: Divider(
@@ -320,13 +310,9 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  (itemFullName != null)
-                      ? Text(itemFullName?[0] ?? 'null')
-                      : Container(),
+                  Text(widget.fullName ?? ''),
                   SizedBox(width: 10),
-                  (itemAddressUser != null)
-                      ? Text(itemAddressUser?[0] ?? 'null')
-                      : Container(),
+                  Text(widget.addressUser ?? ''),
                 ],
               ),
             ),
@@ -346,28 +332,22 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      (item != null) ? Text(item?[0] ?? 'null') : Container(),
+                      Text(widget.storageName ?? ''),
                       SizedBox(height: 15),
-                      (item != null) ? Text(item?[0] ?? 'null') : Container(),
+                      Text(widget.storageName ?? ''),
                       SizedBox(height: 15),
-                      (item != null) ? Text(item?[0] ?? 'null') : Container(),
+                      Text(widget.storageName ?? ''),
                     ],
                   ),
                   SizedBox(width: 15),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      (itemAddress != null)
-                          ? Text(itemAddress?[0] ?? 'null')
-                          : Container(),
+                      Text(widget.address ?? ''),
                       SizedBox(height: 15),
-                      (itemAddress != null)
-                          ? Text(itemAddress?[0] ?? 'null')
-                          : Container(),
+                      Text(widget.address ?? ''),
                       SizedBox(height: 15),
-                      (itemAddress != null)
-                          ? Text(itemAddress?[0] ?? 'null')
-                          : Container(),
+                      Text(widget.address ?? ''),
                     ],
                   ),
                 ],
@@ -708,11 +688,9 @@ class _ShowContractManagementState extends State<ShowContractManagement> {
             SizedBox(height: 10),
             Text('許可'),
             SizedBox(height: 10),
-            (item != null) ? Text(item?[0] ?? 'null') : Container(),
+            Text(widget.storageName ?? ''),
             SizedBox(height: 10),
-            (itemAddress != null)
-                ? Text(itemAddress?[0] ?? 'null')
-                : Container(),
+            Text(widget.address ?? ''),
           ],
         ),
       ),

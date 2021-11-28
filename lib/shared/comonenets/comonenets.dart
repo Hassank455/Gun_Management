@@ -385,29 +385,32 @@ Widget tasksBuilderInformation({
             ),
           );
 
-Widget buildTaskItemScreen4(Map model, context) => GestureDetector(
+Widget buildTaskItemScreen4(Map? model,Map? model2,Map? model3,Map? model4, context)
+=> /*(model != null && model2 != null && model3 != null) ? */GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (_) => ShowContractManagement(
-                      id: model['id'],
+                      id: model!['id'],
                       permissionNumber: model['permissionNumber'],
                       kinds: model['kinds'],
                       gunNumber: model['gunNumber'],
                       productAndName: model['productAndName'],
                       standardCartridge: model['standardCartridge'],
-                     /* address: model2['address'],
-                      title: model3['title'],
+                      address: model2!['address'],
+                      title: model3!['title'],
                       addressUser: model3['addressUser'],
                       fullName: model3['fullName'],
                       storageName: model2['storageName'],
                       telephoneNumber: model3['telephoneNumber'],
-                      user: model3['user'],*/
+                      user: model3['user'],
+
+
                     )));
       },
       child: Dismissible(
-        key: Key(model['id'].toString()),
+        key: Key(model?['id'].toString() ?? ''),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
@@ -423,7 +426,7 @@ Widget buildTaskItemScreen4(Map model, context) => GestureDetector(
                     Row(
                       children: [
                         Text(
-                          '${model['standardCartridge']}',
+                          '${model?['standardCartridge'] ?? ''}',
                           style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
@@ -501,17 +504,20 @@ Widget buildTaskItemScreen4(Map model, context) => GestureDetector(
           ),
         ),
       ),
-    );
+    ) /*: Container()*/;
 
 Widget tasksBuilderScreen4({
   required List<Map>? tasks,
+  required List<Map>? tasks2,
+  required List<Map>? tasks3,
+  required List<Map>? tasks4,
 
 }) =>
-    (tasks!.length > 0)
+    (tasks!.length > 0 && tasks.length == tasks2!.length && tasks.length == tasks3!.length && tasks.length == tasks4!.length)
         ? Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
-                return buildTaskItemScreen4(tasks[index], context);
+                return buildTaskItemScreen4(tasks[index],tasks2[index],tasks3[index],tasks3[index], context)/* : Container()*/;
               },
               separatorBuilder: (context, index) => Padding(
                 padding: const EdgeInsetsDirectional.only(
@@ -526,26 +532,18 @@ Widget tasksBuilderScreen4({
               itemCount: tasks.length,
             ),
           )
-        : Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                /*Icon(
-                  Icons.menu,
-                  size: 100.0,
+        : Expanded(
+          child: Center(
+              child: Text(
+                'データがありません。',
+                style: TextStyle(
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
                   color: Colors.grey,
-                ),*/
-                Text(
-                  'データがありません。',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
                 ),
-              ],
+              ),
             ),
-          );
+        );
 
 Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
       onTap: () {
@@ -559,7 +557,11 @@ Widget buildTaskItemCartidge(Map? model, context) => GestureDetector(
                   gunProduct: model?['gunProduct'] ?? 'null',
                   compatibleCartridge: model?['compatibleCartridge'] ?? 'null',
                   price: model?['price'] ?? 'null',
+                  price2: model?['price2'] ?? 'null',
+                  price3: model?['price3'] ?? 'null',
+                  price4: model?['price4'] ?? 'null',
                   note: model?['note'] ?? 'null',
+                  permission: model?['permission'] ?? 'null',
                     )));
       },
       child: Dismissible(
